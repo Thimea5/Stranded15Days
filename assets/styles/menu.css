@@ -1,0 +1,36 @@
+#menu {
+    border-top-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    position: fixed;
+    top: 20%;
+    left: 0;
+    height: 100%;
+    width: min-content; /* Ajustez la largeur selon vos besoins */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0; /* Ajustez le padding selon vos besoins */
+    font-size: 30px; /* Ajustez la taille de la police selon vos besoins */
+    text-align: left;
+
+}
+#menu ul {
+    list-style-type: none; /* Supprime les points de la liste */
+    margin: 0; /* Supprime la marge par défaut de la liste */
+    padding: 20px;
+}
+#menu li {
+    padding: 20px 0; /* Ajustez le padding selon vos besoins */
+    transition: transform 0.3s ease; /* Ajoute une transition douce */
+
+}
+#menu li:hover {
+    transform: translateX(20px); /* Déplace légèrement vers la droite */
+}
+#menu a {
+    text-decoration: none; /* Supprime le soulignement des liens */
+    color: white;
+}
+#menu a:hover {
+    color: #c6b476;
+}
