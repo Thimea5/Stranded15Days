@@ -3,6 +3,12 @@ body {
    color: #fff;
 }
 
+.container {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
 div {
    text-align: center;
 }
@@ -13,6 +19,16 @@ div {
 
 #header .sous-titre {
  color: #a1a1a1;
+}
+
+.acceuil {
+   background-image: url('../img/homme2.webp'); /* Remplacez par le chemin de votre image */
+   background-size: cover; /* Assure que l'image couvre toute la div */
+   /*background-position: center;  Centre l'image */
+   background-repeat: no-repeat; /* Empêche la répétition de l'image */
+   height: 60vh; /* Assure que la div prend toute la hauteur de la vue */
+   width: 100%; /* Assure que la div prend toute la largeur disponible */
+   bottom: 100%;
 }
 
 
