@@ -28,6 +28,8 @@
 
 #menu li:hover {
     transform: translateX(20px); /* Déplace légèrement vers la droite */
+    color: #c6b476;
+    cursor: pointer;
 }
 
 #menu a {

@@ -3,12 +3,6 @@ body {
    color: #fff;
 }
 
-.container {
-   display: flex;
-   justify-content: center;
-   align-items: center;
-}
-
 div {
    text-align: center;
 }
@@ -21,14 +15,46 @@ div {
  color: #a1a1a1;
 }
 
-.acceuil {
+.glassmorphism {
+background: rgba(100,100,100,0.7);
+   -webkit-backdrop-filter: blur(10px);
+   backdrop-filter: blur(10px);
+   border: 1px solid rgba(255,255,255,0.25);
+   padding: 2vw;
+   margin: 0;
+   border-radius: 6px;
+   text-align: center;
+}
+
+#form-connexion {
+   padding: 20px;
+}
+
+#form-connexion .inputs {
+   padding: 20px;
+}
+
+ /*
+#div-connexion {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+}
+   */
+
+
+.img-intro {
    background-image: url('../img/homme2.webp'); /* Remplacez par le chemin de votre image */
    background-size: cover; /* Assure que l'image couvre toute la div */
    /*background-position: center;  Centre l'image */
    background-repeat: no-repeat; /* Empêche la répétition de l'image */
-   height: 60vh; /* Assure que la div prend toute la hauteur de la vue */
+   height: 70vh; /* Assure que la div prend toute la hauteur de la vue */
    width: 100%; /* Assure que la div prend toute la largeur disponible */
    bottom: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
 }
 
 
