@@ -11,12 +11,19 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Permanent+Marker&display=swap" rel="stylesheet">
 
-        {% include 'menu.html.twig' %}
         {% block javascripts %}
             {% block importmap %}{{ importmap('app') }}{% endblock %}
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <nav id="menu">
+            <ul>
+                <li class="bangers-regular nav-item">Accueil</li>
+                <li class="bangers-regular nav-item">Connexion</li>
+                <li class="bangers-regular nav-item">Inscription</li>
+                <li class="bangers-regular nav-item">Règlement</li>
+            </ul>
+        </nav>
+        {% block body %} {% endblock %}
     </body>
 </html>
