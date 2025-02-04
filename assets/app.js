@@ -6,10 +6,13 @@ import './styles/fonts.css';
 let tabForms= [];
 
 document.addEventListener('DOMContentLoaded', function() {
+    console.log("DOM chargé");
+
     //btn
-    let btnShowConnexion = document.getElementById('btnConnexion');
-    let btnShowInscription = document.getElementById('btninscription');
     let btnAccueil = document.getElementById('btnAccueil');
+    let btnConnexion = document.getElementById('btnConnexion');
+    let btnInscription = document.getElementById('btnInscription');
+    let btnReglement = document.getElementById('btnReglement');
 
     //formulaires
     let formConnexion = document.getElementById('form-connexion');
@@ -19,8 +22,9 @@ document.addEventListener('DOMContentLoaded', function() {
     tabForms.push(formInscription);
     tabForms.push(divConnexion)
 
-    btnShowConnexion.addEventListener('click', function(){
+    btnConnexion.addEventListener('click', function(){
         event.preventDefault();
+        console.log("Bouton connexion cliqué");
         hideForms();
         formConnexion.style.display = 'block';
         divConnexion.style.display = "block";
@@ -28,20 +32,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
     btnAccueil.addEventListener('click', function(){
         event.preventDefault()
+        console.log("Bouton accueil cliqué");
         hideForms();
     });
 
-    btnShowInscription.addEventListener('click', function(){
+    btnInscription.addEventListener('click', function(){
         event.preventDefault();
+        console.log("Bouton inscription cliqué");
         hideForms();
         formInscription.style.display = 'block';
-        document.getElementById("div-inscription ").style.display = "block";
+        document.getElementById("div-inscription").style.display = "block";
     });
 });
 
 
 function hideForms(){
-    for (form of tabForms) {
+    console.log("hideForms");
+    for (let form of tabForms) {
+        console.log(form)
         form.style.display = "none";
     }
 }
