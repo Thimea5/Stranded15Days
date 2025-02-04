@@ -3,6 +3,8 @@ import './styles/app.css';
 import './styles/menu.css';
 import './styles/fonts.css';
 
+const axios = require('axios').default;
+
 let tabForms= [];
 
 document.addEventListener('DOMContentLoaded', function() {
