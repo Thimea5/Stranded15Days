@@ -1,14 +1,14 @@
-<div id="div-inscription" class="glassmorphism bangers-regular " style="display:none;">
-  <form id="form-inscription" style="display:none;">
-    <h1>Inscription</h1>
+<div id="div-inscription" class="form bangers-regular " style="display:none;">
+  <form id="form-inscription">
+    <h1>M'inscrire</h1>
     <div class="inputs">
-      <input type="email" class="form-control mb-2" placeholder="Email" />
-      <input type="email" class="form-control mb-2" placeholder="Email" />
-      <input type="password" class="form-control mb-2" placeholder="Mot de passe">
+      <input name="pseudo" class="form-control mb-2" placeholder="Pseudo" />
+      <input name="email" class="form-control mb-2" placeholder="Email" />
+      <input name="password" class="form-control mb-2" placeholder="Mot de passe" />
     </div>
-    <p class="inscription">Vous avez déjà un compte ? Créez en un ici</p>
+    <p style="font-size:20px">J'ai déjà un compte ! Je me <span id="redirectConnexion">connecte</span></p>
     <div align="center">
-      <button type="submit" class="btn btn-primary">S'inscrire</button>
+      <button type="submit" id="btnFormInscription" class="btn btn-primary">Inscription</button>
     </div>
   </form>
 </div>

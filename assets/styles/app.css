@@ -44,3 +44,29 @@ body {
    align-items: center;
    color: gray;
 }
+
+/* formulaires */
+.form {  
+   justify-content: center;
+   background-color: #070707;
+   opacity: 85%;
+   padding: 4vh 4vw;
+   width: 25vw;
+   align-items: center;
+
+   border-radius: 10px;
+}
+
+.form form {
+   text-align: center;
+}
+
+.form form h1 {
+   text-align: center;
+}
+
+#btnFormConnexion, #btnFormInscription {
+   background-color: #BE4F51;
+   border: none;
+   font-size: 30px;
+}
