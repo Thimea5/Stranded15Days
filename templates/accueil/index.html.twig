@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AccueilController!{% endblock %}
+{% block title %}Accueil{% endblock %}
 
 {% block body %}
-<nav id="menu">
+<nav id="menuAccueil">
     <ul>
         <li id="btnAccueil" class="bangers-regular nav-item" >Accueil</li>
         <li id="btnConnexion" class="bangers-regular nav-item">Connexion</li>
@@ -15,7 +15,8 @@
     <div class="glitch-wrapper" id="lastCallTitle">
         <div class="glitch bangers-regular" data-glitch="Last Call">Last Call</div>
     </div>
-    <h3 class="sous-titre">Serez-vous prêt à affronter le danger ?</h3>
+    {# <h3 class="sous-titre">Ce pourrait bien être votre dernier appel ..</h3>#}
+    <h3 class="sous-titre">Oserez vous répondre à ce dernier appel ?</h3>
 </div>
 <div class="img-intro" >
     {% include 'connexion/index.html.twig' %}

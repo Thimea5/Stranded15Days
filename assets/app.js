@@ -2,6 +2,8 @@ import './bootstrap.js';
 import './styles/app.css';
 import './styles/menu.css';
 import './styles/fonts.css';
+import './styles/accueil.css';
+import './styles/jeu.css';
 
 let tabForms= [];
 

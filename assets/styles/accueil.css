@@ -1,0 +1,54 @@
+
+.img-intro {
+    position: fixed;
+    background-image: url('../img/homme2.webp');
+    background-size: cover; 
+    /*background-position: center;  Centre l'image */
+    background-repeat: no-repeat;
+    top: 20vh; 
+    bottom: 20vh;
+    width: 100%; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+ 
+    overflow: hidden; 
+ }
+ 
+ /*  On supprime les insets sur les côtés gauche et droit */
+ .img-intro::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -30px;
+    right: -30px; 
+    bottom: 0;
+    box-shadow: inset 0px 0px 25.7px 24px rgba(0, 0, 0, 1);
+    pointer-events: none; 
+ }
+ 
+ /* formulaires */
+ .form {  
+    justify-content: center;
+    background-color: #070707;
+    opacity: 85%;
+    padding: 4vh 4vw;
+    width: 25vw;
+    align-items: center;
+ 
+    border-radius: 10px;
+ }
+ 
+ .form form {
+    text-align: center;
+ }
+ 
+ .form form h1 {
+    text-align: center;
+ }
+ 
+ #btnFormConnexion, #btnFormInscription {
+    background-color: #BE4F51;
+    border: none;
+    font-size: 30px;
+ }

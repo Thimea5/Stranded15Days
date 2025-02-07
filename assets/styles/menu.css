@@ -1,4 +1,4 @@
-#menu {
+#menuAccueil, #menuJeu {
     position: fixed;
     top: 50%;
     transform: translateY(-50%); /* Permet d'adapter le menu pour qu'il soit centré horizontalement sinon il comment à 50% */
@@ -13,18 +13,32 @@
     z-index: 1000;
 }
 
-#menu ul {
+#menuAccueil ul {
     list-style-type: none; 
     margin: 0; 
     padding: 20px;
 }
 
-#menu li {
+#menuJeu ul {
+    list-style-type: none;
+    margin: 20px;
+    padding: 0;  
+    display: flex; 
+    flex-direction: column;
+    justify-content: center; /* Centrer horizontalement les items */
+    align-items: center; /* Centrer horizontalement les items */
+}
+
+#menuAccueil li, #menuJeu li {
     padding: 4px 0; 
     transition: transform 0.3s ease;
 }
 
-#menu li:hover {
+#menuJeu li {
+    padding: 20px 0;
+}
+
+#menuAccueil li:hover, #menuJeu li:hover {
     transform: translateX(20px); 
     cursor: pointer;
 }

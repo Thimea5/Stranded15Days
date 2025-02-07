@@ -1,8 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello JeuController!{% endblock %}
+{% block title %}Last Call{% endblock %}
 
 {% block body %}
-<p>Salut jeu<p>
-<button id="btn-deconnexion">Déconnexion</button>
+    <nav id="menuJeu">
+        <ul>
+            <li id="home" class="bangers-regular nav-item"><img src="{{ asset('img/person.png')}}"/></li>
+            <li id="communaction" class="bangers-regular nav-item"><img src="{{ asset('img/smartphone.png')}}"/></li>
+            <li id="secret" class="bangers-regular nav-item"><img src="{{ asset('img/puzzle.png')}}"/></li>
+            <li id="book" class="bangers-regular nav-item"><img src="{{ asset('img/book.png')}}"/></li>
+        </ul>
+    </nav>
+    <div class="glitch-wrapper" id="gametitle">
+        <div class="glitch bangers-regular" data-glitch="Tableau de bord">Tableau de bord</div>
+    </div>
+    <p>Salut {{ utilisateur.pseudo }}<p>
+    <button id="btn-deconnexion">Déconnexion</button>
 {% endblock %}
