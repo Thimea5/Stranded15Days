@@ -8,12 +8,13 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use App\Entity\Utilisateur;
 
 class ConnexionController extends AbstractController
 {
     #[Route('/api/connexion', name: 'connexion', methods: ['POST'])]
-    public function connexion(Request $request, EntityManagerInterface $em): RedirectResponse
+    public function connexion(Request $request, EntityManagerInterface $em, SessionInterface $session): RedirectResponse
     {
         $data = json_decode($request->getContent(), true);
 
@@ -39,5 +40,11 @@ class ConnexionController extends AbstractController
 
         // Retourner une redirection vers une autre page
         return $this->redirectToRoute('jeu'); 
+    }
+
+    #[Route('/api/deconnexion', name: 'deconnexion', methods: ['GET'])]
+    public function deconnexion (SessionInterface $session): RedirectResponse {
+        $session->clear();
+        return $this->redirectToRoute('accueil');
     }
 }

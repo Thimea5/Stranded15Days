@@ -11,10 +11,14 @@ use Symfony\Component\Security\Core\Security;
 class Controller extends AbstractController
 {
     #[Route('/', name: 'app_')]
-    public function index(): Response
+    public function index(SessionInterface $session): Response
     {
-        return $this->render('/index.html.twig', [
-            'controller_name' => 'Controller',
+        if (!$session->has('utilisateur')) {
+            return $this->redirectToRoute('accueil'); // Redirection vers l'accueil si pas connecté
+        }
+
+        return $this->render('jeu/index.html.twig', [
+            'utilisateur' => $session->get('utilisateur')
         ]);
     }
 }

@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let btnReglement = document.getElementById('btnReglement');
     let redirectInscription = document.getElementById('redirectInscription');
     let redirectConnexion = document.getElementById('redirectConnexion');
+    let btnDeconnexion = document.getElementById('btn-deconnexion');
 
     //formulaires
     let formConnexion = document.getElementById('form-connexion');
@@ -26,7 +27,18 @@ document.addEventListener('DOMContentLoaded', function() {
     tabForms.push(divConnexion);
     tabForms.push(divInscription);
 
-    btnConnexion.addEventListener('click', function(){
+    btnDeconnexion?.addEventListener('click', function(){
+        event.preventDefault();
+        axios.get('/api/deconnexion')
+        .then(response => {
+            window.location.href = response.request.responseURL; // Redirection après logout
+        })
+        .catch(error => {
+            console.error("Erreur lors de la déconnexion :", error);
+        });
+    });
+
+    btnConnexion?.addEventListener('click', function(){
         event.preventDefault();
         console.log("Bouton connexion cliqué");
         hideForms();
@@ -34,13 +46,13 @@ document.addEventListener('DOMContentLoaded', function() {
         divConnexion.style.display = 'block';
     });
 
-    btnAccueil.addEventListener('click', function(){
+    btnAccueil?.addEventListener('click', function(){
         event.preventDefault()
         console.log("Bouton accueil cliqué");
         hideForms();
     });
 
-    btnInscription.addEventListener('click', function(){
+    btnInscription?.addEventListener('click', function(){
         event.preventDefault();
         console.log("Bouton inscription cliqué");
         hideForms();
@@ -48,14 +60,14 @@ document.addEventListener('DOMContentLoaded', function() {
         divInscription.style.display = 'block';
     });
 
-    redirectConnexion.addEventListener('click', function(){
+    redirectConnexion?.addEventListener('click', function(){
         event.preventDefault();
         hideForms();
         formConnexion.style.display = 'block';
        divConnexion.style.display = 'block';
     });
 
-    redirectInscription.addEventListener('click', function(){
+    redirectInscription?.addEventListener('click', function(){
         event.preventDefault();
         hideForms();
         formInscription.style.display = 'block';
@@ -63,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Soumission inscription 
-    formInscription.addEventListener('submit', async function (event) {
+    formInscription?.addEventListener('submit', async function (event) {
         event.preventDefault(); 
         console.log('click');
     
@@ -93,23 +105,27 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
 
-    // Soumission connexion
-    formConnexion.addEventListener('submit', async function (event) {
+   // Vérifie que formConnexion existe avant d'ajouter l'event listener
+    formConnexion?.addEventListener('submit', async function (event) {
         event.preventDefault();
+        
         const email = formConnexion.querySelector('input[type="email"]').value;
         const password = formConnexion.querySelector('input[type="password"]').value;
 
-        console.log("Tentative de connexion avec : ", { email, password });
+        console.log("Tentative de connexion avec :", { email, password });
 
         try {
             const response = await axios.post('/api/connexion', { email, password });
-
-            console.log('Connexion réussie :', response.data);
-            alert('Connexion réussie ! Bienvenue, ' + response.data.user.nom);
-
+            console.log("Connexion réussie :", response.data);
+            
+            // Redirige après connexion réussie
+            window.location.href = '/';
         } catch (error) {
-            console.error('Erreur lors de la connexion :', error.response.data);
-            alert('Erreur : ' + (error.response.data.message || 'Impossible de se connecter.'));
+            if (error.response) {
+                console.error("Erreur de connexion :", error.response.data);
+            } else {
+                console.error("Erreur inattendue :", error.message);
+            }
         }
     });
 });

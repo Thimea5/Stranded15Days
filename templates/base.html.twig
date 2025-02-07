@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Last Call{% endblock %}</title>
-        <link rel="icon" href="{{ asset('img/sil2.webp') }}" type="image/webp"> <!-- Remplacez par le chemin de votre nouvelle icône -->
+        <link rel="icon" href="{{ asset('img/sil2.webp') }}" type="image/webp"> 
         {% block stylesheets %}
             <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
         {% endblock %}
@@ -17,14 +17,6 @@
         {% endblock %}
     </head>
     <body>
-        <nav id="menu">
-            <ul>
-                <li id="btnAccueil" class="bangers-regular nav-item" >Accueil</li>
-                <li id="btnConnexion" class="bangers-regular nav-item">Connexion</li>
-                <li id="btnInscription" class="bangers-regular nav-item">Inscription</li>
-                <li id="btnReglement" class="bangers-regular nav-item">Règlement</li>
-            </ul>
-        </nav>
         {% block body %} {% endblock %}
     </body>
 </html>
