@@ -18,6 +18,9 @@ document.addEventListener('DOMContentLoaded', function() {
     let redirectInscription = document.getElementById('redirectInscription');
     let redirectConnexion = document.getElementById('redirectConnexion');
     let btnDeconnexion = document.getElementById('btn-deconnexion');
+    let btnRunConnexion = document.getElementById('btnFormConnexion');
+    let btnRunInscription = document.getElementById('btnFormInscription');
+    let btnRunDeconnexion = document.getElementById('btn-deconnexion');
 
     //formulaires
     let formConnexion = document.getElementById('form-connexion');
@@ -31,8 +34,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     btnDeconnexion?.addEventListener('click', function(){
         event.preventDefault();
+        btnRunDeconnexion.classList.add("btn-loading");
+        btnRunDeconnexion.disabled = true; 
         axios.get('/api/deconnexion')
         .then(response => {
+            btnRunDeconnexion.classList.remove("btn-loading"); 
+            btnRunDeconnexion.disabled = false; 
             window.location.href = response.request.responseURL; // Redirection après logout
         })
         .catch(error => {
@@ -80,6 +87,8 @@ document.addEventListener('DOMContentLoaded', function() {
     formInscription?.addEventListener('submit', async function (event) {
         event.preventDefault(); 
         console.log('click');
+        btnRunInscription.classList.add("btn-loading"); // Active l'effet
+        btnRunInscription.disabled = true; // Désactive le bouton
     
         const pseudo = formInscription.querySelector('input[name="pseudo"]').value;
         const email = formInscription.querySelector('input[name="email"]').value;
@@ -95,6 +104,8 @@ document.addEventListener('DOMContentLoaded', function() {
             if (response.data.message) {
                 alert(response.data.message); 
             }
+            btnRunInscription.classList.remove("btn-loading"); // Enlève l'effet après chargement
+            btnRunInscription.disabled = false; // Réactive le bouton
     
             //hideForms();
             //formConnexion.style.display = 'block';
@@ -110,6 +121,8 @@ document.addEventListener('DOMContentLoaded', function() {
    // Vérifie que formConnexion existe avant d'ajouter l'event listener
     formConnexion?.addEventListener('submit', async function (event) {
         event.preventDefault();
+        btnRunConnexion.classList.add("btn-loading"); // Active l'effet
+        btnRunConnexion.disabled = true; // Désactive le bouton
         
         const email = formConnexion.querySelector('input[type="email"]').value;
         const password = formConnexion.querySelector('input[type="password"]').value;
@@ -119,6 +132,8 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             const response = await axios.post('/api/connexion', { email, password });
             console.log("Connexion réussie :", response.data);
+            btnRunConnexion.classList.remove("btn-loading"); // Enlève l'effet après chargement
+            btnRunConnexion.disabled = false; // Réactive le bouton
             
             // Redirige après connexion réussie
             window.location.href = '/';
