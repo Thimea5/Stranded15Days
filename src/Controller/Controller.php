@@ -17,8 +17,6 @@ class Controller extends AbstractController
             return $this->redirectToRoute('accueil'); // Redirection vers l'accueil si pas connecté
         }
 
-        return $this->render('jeu/index.html.twig', [
-            'utilisateur' => $session->get('utilisateur')
-        ]);
+        return $this->redirectToRoute('jeu'); 
     }
 }

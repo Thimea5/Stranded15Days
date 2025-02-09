@@ -1,0 +1,57 @@
+{
+    "scenarios": {
+        "refuge_oublie": {
+            "title": "Le refuge oublié",
+            "introduction": "Je me reveille difficilement, mon corps est engourdit et douloureux. J'ai très faim, très soif et je suis épuisé. Mais où suis-je ? Je vois un petit batiment un peu plus loin.",
+            "chapitres":[
+                {
+                    "id": 1,
+                    "titre": "le refuge",
+                    "etapes": [
+                        {
+                            "id": 1,
+                            "description": "J'ai vraiment faim, je dois trouver de quoi survivre et me reposer, dois-je entrer dans le batiment ?",
+                            "choix": [
+                            {
+                                "id": "entrer",
+                                "description": "Entrer dans le batiment",
+                                "consequences": {
+                                    "description": "J'entre dans le batiment, il n'y a qu'une pièce et une porte qui est fermée à clé, elle à l'air de mener au sous-sol. Sur le bureau, un ordinateur portable est posé. Dans un placard, je trouve de la nourriture.",
+                                    "ressources": [
+                                        {
+                                            "nom": "miche_de_pain",
+                                            "action": "faim-2"
+                                        },
+                                        {
+                                            "nom": "miche_de_pain"
+                                        }
+                                    ],
+                                    "etape_suivante": 2
+                                }
+                            },
+                            {
+                                "id": 2,
+                                "description": "Continuer ma route et ignorer le batiment",
+                                "consequences": {
+                                    "description": "J'ignore le batiment, je continue d'avancer, rien à l'horizon. Après plusieurs heures de marche, je perds conscience..",
+                                    "ressources": "",
+                                    "etape_suivante": 3
+                                }
+                            }
+                            ]
+                        },
+                        {
+                            "id": 2,
+                            "description": "Je fouille",
+                            "choix": [
+                                {
+
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}

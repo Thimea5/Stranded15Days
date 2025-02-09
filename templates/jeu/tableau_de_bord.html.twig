@@ -1,6 +1,6 @@
-{% extends 'base.html.twig' %}
+{% extends 'index.html.twig' %}
 
-{% block title %}Last Call{% endblock %}
+{% block title %}Tableau de bord{% endblock %}
 
 {% block body %}
     <nav id="menuJeu">
@@ -11,4 +11,9 @@
             <li id="book" class="bangers-regular nav-item"><img src="{{ asset('img/book.png')}}"/></li>
         </ul>
     </nav>
+    <div class="glitch-wrapper" id="gametitle">
+        <div class="glitch bangers-regular" data-glitch="Tableau de bord">Tableau de bord</div>
+    </div>
+    <p>Salut {{ utilisateur.pseudo }}<p>
+    <button id="btn-deconnexion" class="btn btn-danger">Déconnexion</button>
 {% endblock %}
