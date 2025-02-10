@@ -19,9 +19,19 @@ final class JeuController extends AbstractController
     {
         $objet = $em->getRepository(Objet::class)->findOneBy(['nom' => "miche_de_pain"]);
 
+        $cheminFichier = $this->getParameter('kernel.project_dir') . '/src/data/scenarios.json'; // Chemin vers fichier JSON
+        $contenuJson = file_get_contents($cheminFichier);
+        $donnees = json_decode($contenuJson, true); // true pour un tableau associatif
+
+        // Gérer les erreurs si le fichier n'existe pas ou ne contient pas le scénario
+        
+
+        $scenarioData = $donnees['scenarios'];
+
         return $this->render('jeu/tableau_de_bord.html.twig', [
             'utilisateur' => $session->get('utilisateur'),
-            'objet' => $objet
+            'objet' => $objet,
+            'scenario' => $scenarioData
         ]);
     }
 }
