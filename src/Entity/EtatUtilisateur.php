@@ -30,6 +30,15 @@ class EtatUtilisateur
     #[ORM\Column]
     private ?int $fatigue = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $chapitre = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $etape = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $dernierChoix = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -91,6 +100,42 @@ class EtatUtilisateur
     public function setFatigue(int $fatigue): static
     {
         $this->fatigue = $fatigue;
+
+        return $this;
+    }
+
+    public function getChapitre(): ?int
+    {
+        return $this->chapitre;
+    }
+
+    public function setChapitre(?int $chapitre): static
+    {
+        $this->chapitre = $chapitre;
+
+        return $this;
+    }
+
+    public function getEtape(): ?int
+    {
+        return $this->etape;
+    }
+
+    public function setEtape(?int $etape): static
+    {
+        $this->etape = $etape;
+
+        return $this;
+    }
+
+    public function getDernierChoix(): ?int
+    {
+        return $this->dernierChoix;
+    }
+
+    public function setDernierChoix(?int $dernierChoix): static
+    {
+        $this->dernierChoix = $dernierChoix;
 
         return $this;
     }

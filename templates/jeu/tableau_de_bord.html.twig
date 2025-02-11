@@ -11,26 +11,31 @@
             <li id="book" class="bangers-regular nav-item"><img src="{{ asset('img/book.png')}}"/></li>
         </ul>
     </nav>
-    <div class="glitch-wrapper" id="gametitle">
-        <div class="glitch bangers-regular" data-glitch="Tableau de bord">Tableau de bord</div>
+    <div class="glitch-wrapper" id="game-title">
+        <span class="glitch bangers-regular" data-glitch="Tableau de bord">Tableau de bord</span>
     </div>
-    <div class="container">
-        <h1>Journal de {{ utilisateur.pseudo }}</h1>
-        <h2>{{ scenario.refuge_oublie.title}}</h2>
-        <p>{{ scenario.refuge_oublie.introduction }}</p>
-
-        <div>
-            <h3>Chapitre {{ scenario.refuge_oublie.chapitres[1].titre }}</h3>
-            <p>{{ scenario.refuge_oublie.chapitres[1].etapes[1].description }}</p>
-            <h4>Choix possibles : </h4>
-            {% for choix in scenario.refuge_oublie.chapitres[1].etapes[1].choix %}
-                <div>
-                    <h4>{{ choix.id }}</h4>
-                    <p>{{ choix.description }}</p>
+    <div class="container container-bg">
+        <div class="inner-container">
+            <div>
+                <h1 id="h1-tab" class="bangers-regular">Actions</h1>
+                <div class="container">
+                    <p>{{ scenario.refuge_oublie.chapitres[sauvegardeChapitre].etapes[sauvegardeEtape].description }}</p>
+                    <h4>Choix possibles : </h4>
+                    <div class="container-choix">
+                        {% for choix in scenario.refuge_oublie.chapitres[sauvegardeChapitre].etapes[sauvegardeEtape].choix %}
+                            <div>
+                                <p>{{ choix.description }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
-            {% endfor %}
+            </div>
+            <div class="container" >
+                <h1>Journal de {{ utilisateur.pseudo }}</h1>
+                <h3>Chapitre {{ scenario.refuge_oublie.chapitres[sauvegardeChapitre].titre }}</h3>
+                <p>J'ai fais le choix de .. (afficher ancien choix)</p>
+            </div>
         </div>
-
         <button id="btn-deconnexion" class="btn btn-danger">Déconnexion</button>
     </div>
 {% endblock %}

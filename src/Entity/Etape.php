@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\ChoixRepository;
+use App\Repository\EtapeRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ChoixRepository::class)]
-class Choix
+#[ORM\Entity(repositoryClass: EtapeRepository::class)]
+class Etape
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -14,9 +14,6 @@ class Choix
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $titre = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
     private ?string $description = null;
 
     public function getId(): ?int
@@ -24,24 +21,12 @@ class Choix
         return $this->id;
     }
 
-    public function getTitre(): ?string
-    {
-        return $this->titre;
-    }
-
-    public function setTitre(string $titre): static
-    {
-        $this->titre = $titre;
-
-        return $this;
-    }
-
     public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    public function setDescription(?string $description): static
+    public function setDescription(string $description): static
     {
         $this->description = $description;
 

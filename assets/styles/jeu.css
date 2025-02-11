@@ -1,3 +1,59 @@
-#gameTitle {
-    font-size: 10px;
+#game-title {
+    margin: 20px;
+}
+
+#h1-tab {
+    display: flex;
+    justify-content: center; 
+    text-align: center; 
+    background-color: #2A3B4750;
+    margin: 0;
+    border-radius: 10px;
+}
+
+#game-title span{
+    text-shadow: 0px 2px 4px white;
+}
+
+ /* Tableau de bord */
+ .container-bg {
+    background-color: #222222;
+    padding: 2vh 2vw;
+    border-radius: 10px;
+    min-height: 70vh;
+ }
+
+ .inner-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+    border-radius: 10px;
+ }
+
+ .inner-container > div {
+    flex: 1;
+    background-color: #525B6650;
+    border-radius: 10px;
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    padding: 20px; 
+    box-sizing: border-box;
+
+}   
+
+.container-choix {
+    display: flex;
+    flex-direction: row;
+    justify-content: center; 
+    align-items: center;
+}
+
+.container-choix div {
+    margin: 10px;
+    background-color: #222222;
+    border-radius: 10px;
+    padding: 10px;
 }
