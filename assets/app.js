@@ -104,12 +104,8 @@ document.addEventListener('DOMContentLoaded', function() {
             if (response.data.message) {
                 alert(response.data.message); 
             }
-            btnRunInscription.classList.remove("btn-loading"); // Enlève l'effet après chargement
+            btnRunInscription.classList.remove("btn-loading"); // Enlève l'effet après le chargement
             btnRunInscription.disabled = false; // Réactive le bouton
-    
-            //hideForms();
-            //formConnexion.style.display = 'block';
-            //divConnexion.style.display = 'block';
     
         } catch (error) {
             console.error('Erreur lors de l\'inscription :', error.response.data);

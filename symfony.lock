@@ -50,6 +50,7 @@
         },
         "files": [
             "./assets/app.js",
+            "./assets/jeu.js",
             "./assets/styles/app.css",
             "./config/packages/asset_mapper.yaml",
             "./importmap.php"

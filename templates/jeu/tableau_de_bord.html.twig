@@ -5,10 +5,10 @@
 {% block body %}
     <nav id="menuJeu">
         <ul>
-            <li id="home" class="bangers-regular nav-item"><img src="{{ asset('img/person.png')}}"/></li>
+            <li id="book" class="bangers-regular nav-item"><img src="{{ asset('img/book.png')}}"/></li>
             <li id="communaction" class="bangers-regular nav-item"><img src="{{ asset('img/smartphone.png')}}"/></li>
             <li id="secret" class="bangers-regular nav-item"><img src="{{ asset('img/puzzle.png')}}"/></li>
-            <li id="book" class="bangers-regular nav-item"><img src="{{ asset('img/book.png')}}"/></li>
+            <li id="profil" class="bangers-regular nav-item"><img src="{{ asset('img/person.png')}}"/></li>
         </ul>
     </nav>
     <div class="glitch-wrapper" id="game-title">
@@ -16,26 +16,10 @@
     </div>
     <div class="container container-bg">
         <div class="inner-container">
-            <div>
-                <h1 id="h1-tab" class="bangers-regular">Actions</h1>
-                <div class="container">
-                    <p>{{ scenario.refuge_oublie.chapitres[sauvegardeChapitre].etapes[sauvegardeEtape].description }}</p>
-                    <h4>Choix possibles : </h4>
-                    <div class="container-choix">
-                        {% for choix in scenario.refuge_oublie.chapitres[sauvegardeChapitre].etapes[sauvegardeEtape].choix %}
-                            <div>
-                                <p>{{ choix.description }}</p>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-            <div class="container" >
-                <h1>Journal de {{ utilisateur.pseudo }}</h1>
-                <h3>Chapitre {{ scenario.refuge_oublie.chapitres[sauvegardeChapitre].titre }}</h3>
-                <p>J'ai fais le choix de .. (afficher ancien choix)</p>
+            <h1 id="h1-tab" class="bangers-regular">Actions</h1>
+            <div class="content">
+                
             </div>
         </div>
-        <button id="btn-deconnexion" class="btn btn-danger">Déconnexion</button>
     </div>
 {% endblock %}

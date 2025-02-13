@@ -43,3 +43,7 @@
     cursor: pointer;
 }
 
+#menuJeu li:hover {
+    transform: translateX(5px); 
+    cursor: pointer;
+}
