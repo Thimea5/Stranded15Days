@@ -2,8 +2,8 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Last Call{% endblock %}</title>
-        <link rel="icon" href="{{ asset('img/sil2.webp') }}" type="image/webp"> <!-- Remplacez par le chemin de votre nouvelle icône -->
+        <title>{% block title %}Stranded: 15 Days{% endblock %}</title>
+        <link rel="icon" href="{{ asset('img/sil2.webp') }}" type="image/webp"> 
         {% block stylesheets %}
             <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
         {% endblock %}
@@ -11,12 +11,13 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Permanent+Marker&display=swap" rel="stylesheet">
 
-        {% include 'menu.html.twig' %}
         {% block javascripts %}
             {% block importmap %}{{ importmap('app') }}{% endblock %}
+            <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+            <script src="{{ asset('jeu.js') }}"></script>
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        {% block body %} {% endblock %}
     </body>
 </html>

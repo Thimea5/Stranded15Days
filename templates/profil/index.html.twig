@@ -1,0 +1,21 @@
+{% extends 'index.html.twig' %}
+
+{% block title %}Profil{% endblock %}
+
+{% block body %}
+    <nav id="menuJeu">
+        <ul>
+            <li id="book" class="bangers-regular nav-item"><img src="{{ asset('img/book.png')}}"/></li>
+            <li id="communaction" class="bangers-regular nav-item"><img src="{{ asset('img/smartphone.png')}}"/></li>
+            <li id="secret" class="bangers-regular nav-item"><img src="{{ asset('img/puzzle.png')}}"/></li>
+            <li id="profil" class="bangers-regular nav-item"><img src="{{ asset('img/person.png')}}"/></li>
+        </ul>
+    </nav>
+
+    <div class="glitch-wrapper" id="game-title">
+        <span class="glitch bangers-regular" data-glitch="Profil">Profil</span>
+    </div>
+    <div class="container container-bg">
+        <button id="btn-deconnexion" class="btn btn-danger">Déconnexion</button>
+    </div>
+{% endblock %}

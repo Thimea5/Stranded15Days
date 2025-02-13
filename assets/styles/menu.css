@@ -1,42 +1,49 @@
-#menu {
-    border-top-right-radius: 2px;
-    border-bottom-right-radius: 2px;
+#menuAccueil, #menuJeu {
     position: fixed;
-    top: 50%; /* Centre verticalement */
+    top: 50%;
+    transform: translateY(-50%); /* Permet d'adapter le menu pour qu'il soit centré horizontalement sinon il comment à 50% */
     left: 0;
-    transform: translateY(-50%); /* Ajuste pour centrer parfaitement */
-    height: auto; /* Ajustez la hauteur selon vos besoins */
-    width: min-content; /* Ajustez la largeur selon vos besoins */
+
     display: flex;
+    flex-direction: column ;
+
+    padding: 0; 
+    font-size: 30px; 
+
+    z-index: 1000;
+}
+
+#menuAccueil ul {
+    list-style-type: none; 
+    margin: 0; 
+    padding: 20px;
+}
+
+#menuJeu ul {
+    list-style-type: none;
+    margin: 20px;
+    padding: 0;  
+    display: flex; 
     flex-direction: column;
-    align-items: flex-start;
-    padding: 0; /* Ajustez le padding selon vos besoins */
-    font-size: 30px; /* Ajustez la taille de la police selon vos besoins */
-    text-align: left;
+    justify-content: center; /* Centrer horizontalement les items */
+    align-items: center; /* Centrer horizontalement les items */
 }
 
-#menu ul {
-    list-style-type: none; /* Supprime les points de la liste */
-    margin: 0; /* Supprime la marge par défaut de la liste */
-    padding: 10px;
+#menuAccueil li, #menuJeu li {
+    padding: 4px 0; 
+    transition: transform 0.3s ease;
 }
 
-#menu li {
-    padding: 10px 0; /* Ajustez le padding selon vos besoins */
-    transition: transform 0.3s ease; /* Ajoute une transition douce */
+#menuJeu li {
+    padding: 20px 0;
 }
 
-#menu li:hover {
-    transform: translateX(20px); /* Déplace légèrement vers la droite */
-    color: #c6b476;
+#menuAccueil li:hover, #menuJeu li:hover {
+    transform: translateX(20px); 
     cursor: pointer;
 }
 
-#menu a {
-    text-decoration: none; /* Supprime le soulignement des liens */
-    color: white;
-}
-
-#menu a:hover {
-    color: #c6b476;
+#menuJeu li:hover {
+    transform: translateX(5px); 
+    cursor: pointer;
 }
