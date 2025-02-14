@@ -21,7 +21,8 @@
     background-color: #222222;
     padding: 2vh 2vw;
     border-radius: 10px;
-    min-height: 70vh;
+    /*min-height: 70vh;*/
+    margin:2vw;
  }
 
  .inner-container {
@@ -63,4 +64,32 @@
 
 .affichage-scenario {
     font-size: 20px;
+}
+
+.container-tab {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.survivant {
+    margin: 10px;
+    background-color: #fff;
+    color: black;
+    padding: 10px;
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.action {
+    margin: 10px;
+    background-color: #fff;
+    color: black;
+    padding: 10px;
+    border-radius: 10px;
+
+    display: flex;
 }
