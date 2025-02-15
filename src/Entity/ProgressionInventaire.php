@@ -15,22 +15,20 @@ class ProgressionInventaire
     #[ORM\Column]
     private ?int $id = null;
 
-    /**
-     * @var Collection<int, progressionUtilisateur>
-     */
-    #[ORM\OneToMany(targetEntity: progressionUtilisateur::class, mappedBy: 'progressionInventaire')]
-    private Collection $progression_id;
+    // Relation ManyToOne avec Utilisateur
+    #[ORM\ManyToOne(targetEntity: Utilisateur::class, inversedBy: 'progressionInventaires')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Utilisateur $utilisateur = null;
 
     /**
-     * @var Collection<int, Objet>
+     * Relation OneToMany, chaque ProgressionInventaire peut avoir plusieurs objets.
      */
-    #[ORM\ManyToMany(targetEntity: Objet::class)]
-    private Collection $objet_id;
+    #[ORM\OneToMany(targetEntity: Objet::class, mappedBy: 'progressionInventaire')]
+    private Collection $objets;
 
     public function __construct()
     {
-        $this->progression_id = new ArrayCollection();
-        $this->objet_id = new ArrayCollection();
+        $this->objets = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -38,32 +36,14 @@ class ProgressionInventaire
         return $this->id;
     }
 
-    /**
-     * @return Collection<int, progressionUtilisateur>
-     */
-    public function getProgressionId(): Collection
+    public function getUtilisateur(): ?Utilisateur
     {
-        return $this->progression_id;
+        return $this->utilisateur;
     }
 
-    public function addProgressionId(progressionUtilisateur $progressionId): static
+    public function setUtilisateur(?Utilisateur $utilisateur): static
     {
-        if (!$this->progression_id->contains($progressionId)) {
-            $this->progression_id->add($progressionId);
-            $progressionId->setProgressionInventaire($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProgressionId(progressionUtilisateur $progressionId): static
-    {
-        if ($this->progression_id->removeElement($progressionId)) {
-            // set the owning side to null (unless already changed)
-            if ($progressionId->getProgressionInventaire() === $this) {
-                $progressionId->setProgressionInventaire(null);
-            }
-        }
+        $this->utilisateur = $utilisateur;
 
         return $this;
     }
@@ -71,23 +51,23 @@ class ProgressionInventaire
     /**
      * @return Collection<int, Objet>
      */
-    public function getObjetId(): Collection
+    public function getObjets(): Collection
     {
-        return $this->objet_id;
+        return $this->objets;
     }
 
-    public function addObjetId(Objet $objetId): static
+    public function addObjet(Objet $objet): static
     {
-        if (!$this->objet_id->contains($objetId)) {
-            $this->objet_id->add($objetId);
+        if (!$this->objets->contains($objet)) {
+            $this->objets->add($objet);
         }
 
         return $this;
     }
 
-    public function removeObjetId(Objet $objetId): static
+    public function removeObjet(Objet $objet): static
     {
-        $this->objet_id->removeElement($objetId);
+        $this->objets->removeElement($objet);
 
         return $this;
     }

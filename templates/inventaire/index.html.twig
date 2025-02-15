@@ -1,0 +1,100 @@
+{% extends 'index.html.twig' %}
+
+{% block title %}Inventaire{% endblock %}
+
+{% block body %}
+    <!-- MENU GAUCHE -->
+    <nav id="menuJeu">
+        <ul>
+            <li id="book" class="bangers-regular nav-item"><img src="{{ asset('img/book.png')}}"/></li>
+            <li id="inventaire" class="bangers-regular nav-item"><img src="{{ asset('img/backpack.png')}}"/></li>
+            <li id="profil" class="bangers-regular nav-item"><img src="{{ asset('img/person.png')}}"/></li>
+        </ul>
+    </nav>
+     <!-- NOM DE LA PAGE ACTUELLE -->
+    <div class="glitch-wrapper" id="game-title">
+        <span class="glitch bangers-regular" data-glitch="Inventaire">Inventaire</span>
+    </div>
+    <div class="row base-container-inventaire">
+        <!-- AFFICHAGE SURVIVANTS -->
+
+        <div class="col-2">
+            <div class="container container-survivants">
+                <h1 id="h1-tab" class="bangers-regular">Survivants</h1>
+                <div class="row survivant">
+                    <h3>nom</h3>
+                    <p>Faim</p>
+                    <p>Soif</p>
+                    <p>Santé</p>
+                </div>
+                <div class="row survivant">
+                    <h3>nom</h3>
+                    <p>Faim</p>
+                    <p>Soif</p>
+                    <p>Santé</p>
+                </div>
+                <div class="row survivant">
+                    <h3>nom</h3>
+                    <p>Faim</p>
+                    <p>Soif</p>
+                    <p>Santé</p>
+                </div>
+                <div class="row survivant">
+                    <h3>nom</h3>
+                    <p>Faim</p>
+                    <p>Soif</p>
+                    <p>Santé</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- INVENTAIRE -->
+        <div class="col-7">
+            <div class="container container-inventaire">
+                <div class="row h-100 row-inventaire">
+                    <!-- INVENTAIRE EQUIPEMENT -->
+                    <div class="col-4 inner-container-inventaire ">
+                        <div class="col inventaire-equipement">
+                            <div class="row"><img src="{{ asset('img/couteau.png')}}" alt="objet" /></div>
+                            <div class="row"></div>
+                            <div class="row"></div>
+                        </div>
+                    </div>
+
+                    <!-- gap -->
+                    <div class="col-1"></div>
+
+                    <!-- INVENTAIRE RESSOURCE-->
+                    <div class="col-7 inner-container-inventaire">
+                        <div class="row">
+                            <div class="col inventaire-ressource">
+                                <div class="row"><img src="{{ asset('img/pomme.png')}}"/></div>
+                                <div class="row"></div>
+                                <div class="row"></div>
+                                <div class="row"></div>
+                            </div>
+                            <div class="col inventaire-ressource">
+                                <div class="row"></div>
+                                <div class="row" ></div>
+                                <div class="row" ></div>
+                                <div class="row" ></div>
+                            </div>
+                            <div class="col inventaire-ressource">
+                                <div class="row" ></div>
+                                <div class="row" ></div>
+                                <div class="row" ></div>
+                                <div class="row" ></div>
+                            </div>
+                            <div class="col inventaire-ressource">
+                                <div class="row" ></div>
+                                <div class="row" ></div>
+                                <div class="row" ></div>
+                                <div class="row" ></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -10,6 +10,7 @@ class ProgressionUtilisateur
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+    private ?int $jours = null;
 
     #[ORM\ManyToOne(targetEntity: Utilisateur::class, inversedBy: 'progressionUtilisateur')]
     #[ORM\JoinColumn(name: 'id_utilisateur_id', referencedColumnName: 'id')]
@@ -25,6 +26,17 @@ class ProgressionUtilisateur
     public function setIdUtilisateur(?Utilisateur $idUtilisateur): static
     {
         $this->idUtilisateur = $idUtilisateur;
+        return $this;
+    }
+
+    public function getJours(): ?int
+    {
+        return $this->jours;
+    }
+
+    public function setJours(?int $jours): static
+    {
+        $this->jours = $jours;
         return $this;
     }
 

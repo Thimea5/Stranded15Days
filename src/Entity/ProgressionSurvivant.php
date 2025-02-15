@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\ProgressionSurvivantRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProgressionSurvivantRepository::class)]
@@ -15,15 +13,15 @@ class ProgressionSurvivant
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(inversedBy: 'progressionSurvivants')]
+    // Lien vers l'utilisateur
+    #[ORM\ManyToOne(targetEntity: Utilisateur::class, inversedBy: 'progressionSurvivants')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?ProgressionUtilisateur $progression_id = null;
+    private ?Utilisateur $utilisateur = null;
 
-    /**
-     * @var Collection<int, Survivant>
-     */
-    #[ORM\ManyToMany(targetEntity: Survivant::class)]
-    private Collection $survivant_id;
+    // Lien vers un survivant spécifique
+    #[ORM\ManyToOne(targetEntity: Survivant::class)]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Survivant $survivant = null;
 
     #[ORM\Column]
     private ?bool $faim = null;
@@ -37,53 +35,36 @@ class ProgressionSurvivant
     #[ORM\Column]
     private ?bool $exploration = null;
 
-    public function __construct()
-    {
-        $this->survivant_id = new ArrayCollection();
-    }
-
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getProgressionId(): ?ProgressionUtilisateur
+    public function getUtilisateur(): ?Utilisateur
     {
-        return $this->progression_id;
+        return $this->utilisateur;
     }
 
-    public function setProgressionId(?ProgressionUtilisateur $progression_id): static
+    public function setUtilisateur(?Utilisateur $utilisateur): static
     {
-        $this->progression_id = $progression_id;
+        $this->utilisateur = $utilisateur;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, Survivant>
-     */
-    public function getSurvivantId(): Collection
+    public function getSurvivant(): ?Survivant
     {
-        return $this->survivant_id;
+        return $this->survivant;
     }
 
-    public function addSurvivantId(Survivant $survivantId): static
+    public function setSurvivant(?Survivant $survivant): static
     {
-        if (!$this->survivant_id->contains($survivantId)) {
-            $this->survivant_id->add($survivantId);
-        }
+        $this->survivant = $survivant;
 
         return $this;
     }
 
-    public function removeSurvivantId(Survivant $survivantId): static
-    {
-        $this->survivant_id->removeElement($survivantId);
-
-        return $this;
-    }
-
-    public function isFaim(): ?bool
+    public function getFaim(): ?static
     {
         return $this->faim;
     }

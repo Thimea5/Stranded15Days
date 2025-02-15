@@ -4,7 +4,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // => Gestion menu
     let btnMenuBook = document.getElementById('book');
     let btnMenuProfil = document.getElementById('profil');
-    let btnsChoix = document.querySelectorAll('.choix-description'); // Sélectionne tous les éléments avec la classe
+    let btnMenuInventaire = document.getElementById('inventaire');
+    
 
     btnMenuBook?.addEventListener('click', function(){
         console.log('click');
@@ -17,5 +18,10 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.href = '/profil';
     });
 
+    btnMenuInventaire?.addEventListener('click', function(){
+        console.log('click');
+
+        window.location.href = '/inventaire';
+    });
 
 });

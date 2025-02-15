@@ -22,6 +22,8 @@ class Survivant
     #[ORM\Column(length: 255)]
     private ?string $img = null;
 
+    // Pas de lien direct avec la progression ici
+
     public function getId(): ?int
     {
         return $this->id;

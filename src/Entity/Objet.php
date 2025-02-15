@@ -28,6 +28,8 @@ class Objet
     #[ORM\Column(length: 255)]
     private ?string $rarete = null;
 
+    // Pas de lien vers ProgressionInventaire ici.
+
     public function getId(): ?int
     {
         return $this->id;

@@ -2,82 +2,107 @@
 
 namespace App\Controller;
 
+use App\Entity\ProgressionUtilisateur;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Survivant;
+use App\Entity\Utilisateur;
+use App\Entity\ProgressionInventaire;
+use App\Entity\ProgressionSurvivant;
+use App\Entity\Objet;
 
 final class JeuController extends AbstractController
 {
     #[Route('/jeu', name: 'jeu')]
     public function index(SessionInterface $session, EntityManagerInterface $em): Response
     {
-        // // Récupérer un objet précis
-        // $objet = $em->getRepository(Objet::class)->findOneBy(['nom' => "miche_de_pain"]);
+        // Vérifier si l'utilisateur est bien en session
+        $utilisateur = $session->get('utilisateur');
 
-        // // Charger les données de scénario à partir du fichier JSON
-        // $cheminFichier = $this->getParameter('kernel.project_dir') . '/src/data/scenarios.json'; // Chemin vers fichier JSON
-        // $contenuJson = file_get_contents($cheminFichier);
-        // $donnees = json_decode($contenuJson, true); // true pour un tableau associatif
-        // $scenarioData = $donnees['scenarios'];
-        // $etatUtilisateur = $this->getEtatUtilisateur($session, $em);
-        // $etape = $etatUtilisateur->getEtape();
-        // $chapitre = $etatUtilisateur->getChapitre();
+        if (!$utilisateur) {
+            // Récupérer un utilisateur par défaut, par exemple ID = 1 (à adapter selon ton projet)
+            $utilisateur = $em->getRepository(Utilisateur::class)->find(1);
+
+            if (!$utilisateur) {
+                throw new \Exception("Aucun utilisateur trouvé.");
+            }
+
+            // Ajouter l'utilisateur dans la session
+            $session->set('utilisateur', $utilisateur);
+        }
+
+        $progressionUtilisateur = $this->getSauvegarde($utilisateur, $em);
+
+        // Récupérer un survivant précis
+        $jean = $em->getRepository(Survivant::class)->findOneBy(['id' => 1]);
 
         return $this->render('jeu/tableau_de_bord.html.twig', [
-            'utilisateur' => $session->get('utilisateur'),
-            // 'objet' => $objet,
-            // 'scenario' => $scenarioData,
-            // 'etatUtilisateur' => $etatUtilisateur,
-            // 'sauvegardeChapitre' => $chapitre,
-            // 'sauvegardeEtape' => $etape
+            'utilisateur' => $utilisateur,
+            'jean' => $jean,
+            'progressionUtilisateur' => $progressionUtilisateur
         ]);
     }
 
-    // public function setSauvegarde(SessionInterface $session, $histoire, EntityManagerInterface $em, $chapitreId) {
-    //     $etatUtilisateur = this.getEtatUtilisateur();
+    public function getSauvegarde(Utilisateur $utilisateur, EntityManagerInterface $em): ProgressionUtilisateur
+    {
+        // Récupération de la sauvegarde existante
+        $progressionUtilisateur = $em->getRepository(ProgressionUtilisateur::class)->findOneBy(['idUtilisateur' => $utilisateur]);
+    
+        // Si aucune sauvegarde n'existe, on en crée une nouvelle
+        if (!$progressionUtilisateur) {
+            $progressionUtilisateur = $this->creerSauvegarde($utilisateur, $em);
+        }
+    
+        return $progressionUtilisateur;
+    }
+    
 
-    //     $etatUtilisateur->setChapitre($chapitre);
-    //     $etatUtilisateur->setEtape($etape);
+    public function creerSauvegarde($utilisateur , EntityManagerInterface $em): ProgressionUtilisateur
+    {
 
-    //     // Persiste et flush pour sauvegarder en BDD
-    //     $em->persist($etatUtilisateur);
-    //     $em->flush();
-    // }
+        $utilisateur = $em->getRepository(Utilisateur::class)->find($utilisateur->getId());
+        if (!$utilisateur) {
+            throw new \Exception("Utilisateur non trouvé en base de données.");
+        }
+        // Vérifier si l'utilisateur a déjà une sauvegarde
+        $ancienneProgression = $em->getRepository(ProgressionUtilisateur::class)->findOneBy(['idUtilisateur' => $utilisateur]);
+        if ($ancienneProgression) {
+            return $ancienneProgression; // Retourner la progression existante si elle existe
+        }
 
-    // public function getEtatUtilisateur(SessionInterface $session, EntityManagerInterface $em): EtatUtilisateur
-    // {
-    //     $utilisateur = $session->get('utilisateur'); 
-    //     $histoire = $em->getRepository(Histoire::class)->findOneBy(['id' => '1']);
+        // Création de la progression utilisateur
+        $progressionUtilisateur = new ProgressionUtilisateur();
+        $progressionUtilisateur->setIdUtilisateur($utilisateur);
+        $progressionUtilisateur->setJours(0);
 
-    //     $donnees = $em->getRepository(EtatUtilisateur::class)->findOneBy([
-    //         'utilisateur' => $utilisateur, 
-    //         'histoire' => $histoire
-    //     ]);
+        // Récupération du survivant avec l'ID 1
+        $survivant = $em->getRepository(Survivant::class)->find(1);
+        if (!$survivant) {
+            throw new \Exception("Aucun survivant avec l'ID 1 trouvé.");
+        }
 
-    //     if (!$donnees) {
-    //         $donnees = $this->creerSauvegarde($utilisateur, $histoire , $em); // Créer une nouvelle sauvegarde si elle n'existe pas
-    //     } 
+        // Création de la progression du survivant
+        $progressionSurvivant = new ProgressionSurvivant();
+        $progressionSurvivant->setSurvivant($survivant);
+        $progressionSurvivant->setUtilisateur($utilisateur);
+        $progressionSurvivant->setFaim(5);
+        $progressionSurvivant->setSoif(5);
+        $progressionSurvivant->setMaladie(false);
+        $progressionSurvivant->setExploration(false);
 
+        // Création de l'inventaire de départ
+        $inventaire = new ProgressionInventaire();
+        $inventaire->setUtilisateur($utilisateur);
 
-    //     return $donnees;
-    // }
+        // Persist et flush
+        $em->persist($progressionUtilisateur);
+        $em->persist($progressionSurvivant);
+        $em->persist($inventaire);
+        $em->flush();
 
-    // public function creerSauvegarde($utilisateur, $histoire , EntityManagerInterface $em): EtatUtilisateur
-    // {
-    //     // $etatUtilisateur = new EtatUtilisateur();
-    //     // $etatUtilisateur->setUtilisateur($utilisateur);
-    //     // $etatUtilisateur->setHistoire($histoire);
-    //     // $etatUtilisateur->setSatiete(5);
-    //     // $etatUtilisateur->setSoif(5);
-    //     // $etatUtilisateur->setFatigue(5);
-    //     // $etatUtilisateur->setChapitre(1);
-    //     // $etatUtilisateur->setEtape(1);
-
-    //     // $em->persist($etatUtilisateur);
-    //     // $em->flush();
-
-    //     // return $etatUtilisateur;
-    // }
+        return $progressionUtilisateur;
+    }
 }
