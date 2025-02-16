@@ -9,4 +9,18 @@
             <li id="book" class="bangers-regular nav-item"><img src="{{ asset('img/book.png')}}"/></li>
         </ul>
     </nav>
+
+    <div class="glitch-wrapper" id="game-title">
+        <span class="glitch bangers-regular" data-glitch="Tableau de bord">Tableau de bord</span>
+    </div>
+
+    <div class="container container-home">
+        <h1>Informations récoltées</h1>
+        {% for utilisateur.informations %} 
+            <div class="col-3"> 
+                <h3>{{ information.titre }}</h3>
+                <p>{{ information.description }}</p>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}

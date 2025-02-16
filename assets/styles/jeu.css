@@ -93,54 +93,8 @@
     display: flex;
 }
 
- /* =====> Tableau de bord <===== */
-
- .base-container-inventaire {
-    align-items: center;
-    justify-content: center;
- }
- 
- .container-inventaire {
-    background-color: #525B6650;
-    padding: 2vh 2vw;
-    border-radius: 10px;
- }
-
- .inner-container-inventaire {
-    background-color:#4F5B6870;
-    border-radius: 10px;
- }
- 
- .inventaire-ressource div{
-    display: flex;
-    align-items: center;
-    justify-content: center;
- }
-
- .inventaire-ressource .row {
-    margin: 20px;
-    aspect-ratio: 1 / 1; /* Maintient un carré */
-    background-color: #D9D9D9;
-    border-radius: 10px;
- }
-
- .inventaire-equipement div{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
- }
-
- .inventaire-equipement .row {
-    margin: 20px;
-    aspect-ratio: 2 / 1; 
-    background-color: #D9D9D9;
-    border-radius: 10px;
-    
- }
-
  .container-survivants {
-    background-color: #4F5B6870;
+    background-color: #2A3B47 ;
     padding: 20px;
     border-radius: 10px;  
  }
@@ -152,7 +106,14 @@
 }
 
 .container-home {
-   background-color: #5D667050;
+   margin-top: 50px;
+   background-color: #2A3B4770;
    padding: 2vh 2vw;
+   border-radius: 10px;
+   border: 2px solid grey;
+}
+
+.card {
+   border: 3px solid black;
    border-radius: 10px;
 }
