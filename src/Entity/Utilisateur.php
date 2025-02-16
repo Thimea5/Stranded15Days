@@ -1,9 +1,8 @@
 <?php
+// src/Entity/Joueur.php
 namespace App\Entity;
 
 use App\Repository\UtilisateurRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
@@ -14,25 +13,33 @@ class Utilisateur
     #[ORM\Column]
     private ?int $id = null;
 
+    // Informations d'identification
     #[ORM\Column(length: 255)]
     private ?string $pseudo = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $mail = null;
 
     #[ORM\Column(length: 255)]
     private ?string $mdp = null;
 
-    #[ORM\OneToOne(mappedBy: 'idUtilisateur', cascade: ['persist', 'remove'])]
-    private ?ProgressionUtilisateur $progressionUtilisateur = null;
+    // Statistiques de progression
+    #[ORM\Column]
+    private ?int $niveau = 1;
 
-    #[ORM\OneToMany(mappedBy: "utilisateur", targetEntity: ProgressionSurvivant::class, cascade: ["persist", "remove"])]
-    private Collection $progressionSurvivants;
+    #[ORM\Column]
+    private ?int $experience = 0;
 
-    public function __construct()
-    {
-        $this->progressionSurvivants = new ArrayCollection();
-    }
+    #[ORM\Column]
+    private ?int $sante = 100;
+
+    #[ORM\Column]
+    private ?int $faim = 100;
+
+    #[ORM\Column]
+    private ?int $soif = 100;
+
+    // Getters et setters
 
     public function getId(): ?int
     {
@@ -44,18 +51,18 @@ class Utilisateur
         return $this->pseudo;
     }
 
-    public function setPseudo(string $pseudo): static
+    public function setPseudo(string $pseudo): self
     {
         $this->pseudo = $pseudo;
         return $this;
     }
 
-    public function getMail(): ?string
+    public function getmail(): ?string
     {
         return $this->mail;
     }
 
-    public function setMail(string $mail): static
+    public function setmail(string $mail): self
     {
         $this->mail = $mail;
         return $this;
@@ -66,50 +73,64 @@ class Utilisateur
         return $this->mdp;
     }
 
-    public function setMdp(string $mdp): static
+    public function setMdp(string $mdp): self
     {
         $this->mdp = $mdp;
         return $this;
     }
 
-    public function getProgressionUtilisateur(): ?ProgressionUtilisateur
+    public function getNiveau(): ?int
     {
-        return $this->progressionUtilisateur;
+        return $this->niveau;
     }
 
-    public function setProgressionUtilisateur(ProgressionUtilisateur $progressionUtilisateur): static
+    public function setNiveau(int $niveau): self
     {
-        if ($progressionUtilisateur->getIdUtilisateur() !== $this) {
-            $progressionUtilisateur->setIdUtilisateur($this);
-        }
-
-        $this->progressionUtilisateur = $progressionUtilisateur;
+        $this->niveau = $niveau;
         return $this;
     }
 
-    public function getProgressionSurvivants(): Collection
+    public function getExperience(): ?int
     {
-        return $this->progressionSurvivants;
+        return $this->experience;
     }
 
-    public function addProgressionSurvivant(ProgressionSurvivant $progressionSurvivant): static
+    public function setExperience(int $experience): self
     {
-        if (!$this->progressionSurvivants->contains($progressionSurvivant)) {
-            $this->progressionSurvivants->add($progressionSurvivant);
-            $progressionSurvivant->setUtilisateur($this);
-        }
-
+        $this->experience = $experience;
         return $this;
     }
 
-    public function removeProgressionSurvivant(ProgressionSurvivant $progressionSurvivant): static
+    public function getSante(): ?int
     {
-        if ($this->progressionSurvivants->removeElement($progressionSurvivant)) {
-            if ($progressionSurvivant->getUtilisateur() === $this) {
-                $progressionSurvivant->setUtilisateur(null);
-            }
-        }
+        return $this->sante;
+    }
 
+    public function setSante(int $sante): self
+    {
+        $this->sante = $sante;
+        return $this;
+    }
+
+    public function getFaim(): ?int
+    {
+        return $this->faim;
+    }
+
+    public function setFaim(int $faim): self
+    {
+        $this->faim = $faim;
+        return $this;
+    }
+
+    public function getSoif(): ?int
+    {
+        return $this->soif;
+    }
+
+    public function setSoif(int $soif): self
+    {
+        $this->soif = $soif;
         return $this;
     }
 }
