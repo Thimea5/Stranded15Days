@@ -24,7 +24,7 @@ class ProgressionSurvivant
     private ?Survivant $survivant = null;
 
     #[ORM\Column]
-    private ?bool $faim = null;
+    private ?int $faim = null;
 
     #[ORM\Column]
     private ?int $soif = null;
@@ -34,6 +34,9 @@ class ProgressionSurvivant
 
     #[ORM\Column]
     private ?bool $exploration = null;
+
+    #[ORM\Column]
+    private ?bool $mort = null;
 
     public function getId(): ?int
     {
@@ -64,12 +67,12 @@ class ProgressionSurvivant
         return $this;
     }
 
-    public function getFaim(): ?static
+    public function getFaim(): ?int
     {
         return $this->faim;
     }
 
-    public function setFaim(bool $faim): static
+    public function setFaim(int $faim): static
     {
         $this->faim = $faim;
 
@@ -108,6 +111,18 @@ class ProgressionSurvivant
     public function setExploration(bool $exploration): static
     {
         $this->exploration = $exploration;
+
+        return $this;
+    }
+
+    public function isMort(): ?bool
+    {
+        return $this->mort;
+    }
+
+    public function setMort(bool $mort): static
+    {
+        $this->mort = $mort;
 
         return $this;
     }

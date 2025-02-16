@@ -2,6 +2,8 @@
 namespace App\Entity;
 
 use App\Repository\UtilisateurRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
@@ -23,6 +25,14 @@ class Utilisateur
 
     #[ORM\OneToOne(mappedBy: 'idUtilisateur', cascade: ['persist', 'remove'])]
     private ?ProgressionUtilisateur $progressionUtilisateur = null;
+
+    #[ORM\OneToMany(mappedBy: "utilisateur", targetEntity: ProgressionSurvivant::class, cascade: ["persist", "remove"])]
+    private Collection $progressionSurvivants;
+
+    public function __construct()
+    {
+        $this->progressionSurvivants = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -74,6 +84,32 @@ class Utilisateur
         }
 
         $this->progressionUtilisateur = $progressionUtilisateur;
+        return $this;
+    }
+
+    public function getProgressionSurvivants(): Collection
+    {
+        return $this->progressionSurvivants;
+    }
+
+    public function addProgressionSurvivant(ProgressionSurvivant $progressionSurvivant): static
+    {
+        if (!$this->progressionSurvivants->contains($progressionSurvivant)) {
+            $this->progressionSurvivants->add($progressionSurvivant);
+            $progressionSurvivant->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProgressionSurvivant(ProgressionSurvivant $progressionSurvivant): static
+    {
+        if ($this->progressionSurvivants->removeElement($progressionSurvivant)) {
+            if ($progressionSurvivant->getUtilisateur() === $this) {
+                $progressionSurvivant->setUtilisateur(null);
+            }
+        }
+
         return $this;
     }
 }

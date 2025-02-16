@@ -88,10 +88,11 @@ final class JeuController extends AbstractController
         $progressionSurvivant = new ProgressionSurvivant();
         $progressionSurvivant->setSurvivant($survivant);
         $progressionSurvivant->setUtilisateur($utilisateur);
-        $progressionSurvivant->setFaim(5);
-        $progressionSurvivant->setSoif(5);
+        $progressionSurvivant->setFaim(2);
+        $progressionSurvivant->setSoif(2);
         $progressionSurvivant->setMaladie(false);
         $progressionSurvivant->setExploration(false);
+        $progressionSurvivant->setMort(false);
 
         // Création de l'inventaire de départ
         $inventaire = new ProgressionInventaire();

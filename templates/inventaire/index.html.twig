@@ -21,30 +21,16 @@
         <div class="col-2">
             <div class="container container-survivants">
                 <h1 id="h1-tab" class="bangers-regular">Survivants</h1>
-                <div class="row survivant">
-                    <h3>nom</h3>
-                    <p>Faim</p>
-                    <p>Soif</p>
-                    <p>Santé</p>
-                </div>
-                <div class="row survivant">
-                    <h3>nom</h3>
-                    <p>Faim</p>
-                    <p>Soif</p>
-                    <p>Santé</p>
-                </div>
-                <div class="row survivant">
-                    <h3>nom</h3>
-                    <p>Faim</p>
-                    <p>Soif</p>
-                    <p>Santé</p>
-                </div>
-                <div class="row survivant">
-                    <h3>nom</h3>
-                    <p>Faim</p>
-                    <p>Soif</p>
-                    <p>Santé</p>
-                </div>
+                {% for survivantProgression in survivantsProgression %}
+                    <div id="survivantProgression-{{ survivantProgression.id }}" class="row survivant dropzone" data-id="{{ survivantProgression.id }}">
+                        <strong>{{ survivants[0].prenom }} {{ survivants[0].nom }}</strong>
+                        <p id="faim-{{ survivantProgression.id }}">Satiété : {{ survivantProgression.faim }}</p>
+                        <p id="soif-{{ survivantProgression.id }}">Soif : {{ survivantProgression.soif }}</p>
+                        {% if survivantProgression.maladie %}
+                            <p>Malade</p>
+                        {% endif %}
+                    </div>
+                {% endfor %}
             </div>
         </div>
 
@@ -68,7 +54,7 @@
                     <div class="col-7 inner-container-inventaire">
                         <div class="row">
                             <div class="col inventaire-ressource">
-                                <div class="row"><img src="{{ asset('img/pomme.png')}}"/></div>
+                                <div class="row"><img src="{{ asset('img/pomme.png')}}" draggable="true"/></div>
                                 <div class="row"></div>
                                 <div class="row"></div>
                                 <div class="row"></div>
