@@ -48,35 +48,24 @@ final class InventaireController extends AbstractController
             ->findBy(['utilisateur' => $utilisateur]);
     }
 
+
     #[Route('/updateFaim', name: 'update_faim', methods: ['POST'])]
     public function updateFaim(Request $request, EntityManagerInterface $em): JsonResponse
     {
-        dump($request->getContent());
-        die;
-
-
-        // Récupérer les données JSON de la requête
         $data = json_decode($request->getContent(), true);
 
         if (empty($data['survivantId']) || !isset($data['faim'])) {
             return new JsonResponse(['success' => false, 'message' => 'Données manquantes.'], 400);
         }
 
-        $survivantData = $data['survivant']; // L'objet survivant reçu en JSON
-        $faim = $data['faim']; // Incrémentation de la faim
-
-        // Log pour vérifier le contenu de l'objet survivant
-        error_log('Données du survivant : ' . json_encode($survivantData));
-
-        // Récupérer l'entité Survivant à partir de l'objet JSON (par exemple, avec l'ID)
-        $survivant = $em->getRepository(Survivant::class)->find($survivantData['id']);
+        // Récupérer le survivant depuis la base de données
+        $survivant = $em->getRepository(Survivant::class)->find($data['survivantId']);
 
         if (!$survivant) {
-            error_log('Survivant non trouvé avec l\'ID : ' . $survivantData['id']);
             return new JsonResponse(['success' => false, 'message' => 'Survivant non trouvé.'], 404);
         }
 
-        // Récupérer l'entité ProgressionSurvivant
+        // Récupérer la progression du survivant
         $progressionSurvivant = $em->getRepository(ProgressionSurvivant::class)->findOneBy([
             'survivant' => $survivant
         ]);
@@ -86,15 +75,24 @@ final class InventaireController extends AbstractController
         }
 
         // Mise à jour de la faim
-        $progressionSurvivant->setFaim($progressionSurvivant->getFaim() + $faim);
+        $nouvelleFaim = min($progressionSurvivant->getFaim() + $data['faim'], 5);
+        $progressionSurvivant->setFaim($nouvelleFaim);
 
-        if ($progressionSurvivant->getFaim() <= 0) {
+        if ($nouvelleFaim <= 0) {
             $progressionSurvivant->setMort(true);
         }
 
-        // Sauvegarde dans la base de données
+        $em->persist($progressionSurvivant);
         $em->flush();
 
-        return new JsonResponse(['success' => true, 'message' => 'Faim mise à jour avec succès.']);
+        return new JsonResponse([
+            'success' => true,
+            'message' => 'Faim mise à jour avec succès.',
+            'survivant' => [
+                'id' => $progressionSurvivant->getSurvivant()->getId(),
+                'faim' => $progressionSurvivant->getFaim()
+            ]
+        ]);
     }
+
 }

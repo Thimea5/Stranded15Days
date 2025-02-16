@@ -12,8 +12,8 @@ class ProgressionUtilisateur
     private ?int $id = null;
     private ?int $jours = null;
 
-    #[ORM\ManyToOne(targetEntity: Utilisateur::class, inversedBy: 'progressionUtilisateur')]
-    #[ORM\JoinColumn(name: 'id_utilisateur_id', referencedColumnName: 'id')]
+    #[ORM\OneToOne(inversedBy: 'progressionUtilisateur', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(name: 'id_utilisateur_id', referencedColumnName: 'id', unique: true)]
     private ?Utilisateur $idUtilisateur = null;
 
     // Autres propriétés de la classe

@@ -22,7 +22,7 @@
             <div class="container container-survivants">
                 <h1 id="h1-tab" class="bangers-regular">Survivants</h1>
                 {% for survivantProgression in survivantsProgression %}
-                    <div id="survivantProgression-{{ survivantProgression.id }}" class="row survivant dropzone" data-id="{{ survivantProgression.id }}">
+                    <div id="survivantProgression-{{ survivantProgression.id }}" class="row survivant dropzone">
                         <strong>{{ survivants[0].prenom }} {{ survivants[0].nom }}</strong>
                         <p id="faim-{{ survivantProgression.id }}">Satiété : {{ survivantProgression.faim }}</p>
                         <p id="soif-{{ survivantProgression.id }}">Soif : {{ survivantProgression.soif }}</p>

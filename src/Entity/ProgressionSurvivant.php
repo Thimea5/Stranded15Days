@@ -126,4 +126,9 @@ class ProgressionSurvivant
 
         return $this;
     }
+
+    public function __toString(): string
+    {
+        return sprintf("Survivant ID: %d, Faim: %d", $this->getSurvivant()->getId(), $this->getFaim());
+    }
 }
