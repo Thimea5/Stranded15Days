@@ -21,60 +21,38 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.href = '/inventaire';
     });
 
-    // Gestion des drag & drop
-    const objets = document.querySelectorAll(".objet");
-    const survivants = document.querySelectorAll(".dropzone");
+    const actions = document.querySelectorAll(".card");
 
-    // Permet aux objets d'être glissés
-    objets.forEach(objet => {
-        objet.addEventListener("dragstart", (event) => {
-            event.dataTransfer.setData("text/plain", event.target.id);
-        });
-    });
+    actions.forEach(action => {
+        action.addEventListener("click", function () {
+            let type = "";
+            if (this.querySelector("h5").innerText.includes("nourriture")) type = "faim";
+            if (this.querySelector("h5").innerText.includes("eau")) type = "soif";
+            if (this.querySelector("h5").innerText.includes("reposer")) type = "sante";
 
-    // Permet aux survivants d'accepter le drop
-    survivants.forEach(survivant => {
-        survivant.addEventListener("dragover", (event) => {
-            event.preventDefault(); // Nécessaire pour permettre le drop
-            console.log('dragover');
-        });
-
-        survivant.addEventListener("drop", async (event) => {  // Ajout de async ici
-            event.preventDefault();
-
-            const survivantId = survivant.id.split('-')[1];
-
-
-            console.log(survivantId);
-
-
-            // Récupère la faim actuelle
-            const faimElement = document.getElementById(`faim-${survivantId}`);
-            const faimText = faimElement.textContent.trim();
-            const match = faimText.match(/(\d+)$/);
-            let faim = match ? parseInt(match[1], 10) : NaN;
-
-            if (isNaN(faim)) {
-                console.error('Erreur : valeur de faim non valide', faimText);
-                return;
-            }
-
-            if (faim < 5) {  // La faim ne peut pas dépasser 5
-                faim += 1;
-                faimElement.textContent = `Satiété : ${faim}`;
-            }
-
-            // Envoi des données au serveur
-            try {
-                const response = await axios.post('/updateFaim', {
-                    survivantId: survivantId,
-                    faim: 1
+            if (type) {
+                fetch("/jeu/action", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-Requested-With": "XMLHttpRequest"
+                    },
+                    body: JSON.stringify({ type: type })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.querySelector("h2").innerText = "Jour " + data.niveau;
+                        document.querySelector("p:nth-child(1)").innerText = "Satiété : " + data.faim;
+                        document.querySelector("p:nth-child(2)").innerText = "Soif : " + data.soif;
+                        document.querySelector("p:nth-child(3)").innerText = "Santé : " + data.sante;
+                    } else {
+                        alert("Action impossible !");
+                    }
                 });
-
-                console.log('Réponse serveur:', response.data);
-            } catch (error) {
-                console.error('Erreur lors de la requête:', error);
             }
         });
     });
+
+    
 });
