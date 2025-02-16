@@ -35,45 +35,49 @@ final class JeuController extends AbstractController
     }
 
 
-   #[Route('/jeu/action', name: 'jeu_action', methods: ['POST'])]
+    #[Route('/jeu/action', name: 'jeu_action', methods: ['POST'])]
     public function jeuAction(Request $request, EntityManagerInterface $em, SessionInterface $session): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
         if (!isset($data['type'])) {
             return new JsonResponse(['success' => false, 'message' => 'Type d\'action manquant.'], 400);
         }
-
+    
         $utilisateur = $session->get('utilisateur');
         if (!$utilisateur) {
             return new JsonResponse(['success' => false, 'message' => 'Utilisateur non trouvé.'], 404);
         }
-
-        error_log("Action reçue : " . $data['type']);
-
-        if($data['type'] == 'manger'){
-            $utilisateur->setFaim($utilisateur->getFaim() + 20);
-        } elseif($data['type'] == 'boire'){
-            $utilisateur->setFaim($utilisateur->getSoif() + 20);
-        } elseif($data['type'] == 'reposer'){
-            $utilisateur->setFaim($utilisateur->getSante() + 20);
-        // } elseif($data['type'] == 'rechercher'){
-        //     $utilisateur->setExperience($utilisateur->getExperience() + 20);
+    
+        // Vérifier si l'utilisateur existe déjà en base de données
+        $existingUser = $em->getRepository(Utilisateur::class)->findOneBy(['id' => $utilisateur->getId()]);
+        if (!$existingUser) {
+            return new JsonResponse(['success' => false, 'message' => 'Utilisateur non trouvé en base de données.'], 404);
+        }
+    
+        // Logique pour les actions
+        if ($data['type'] == 'manger') {
+            $existingUser->setFaim($existingUser->getFaim() + 20);
+        } elseif ($data['type'] == 'boire') {
+            $existingUser->setSoif($existingUser->getSoif() + 20);
+        } elseif ($data['type'] == 'reposer') {
+            $existingUser->setSante($existingUser->getSante() + 20);
         } else {
             return new JsonResponse(['success' => false, 'message' => 'Action non reconnue.'], 400);
         }
-
-        $utilisateur->setNiveau($utilisateur->getNiveau() + 1);
+    
+        $existingUser->setNiveau($existingUser->getNiveau() + 1);
+    
+        // Persister les changements
+        $em->persist($existingUser);
         $em->flush();
-
+    
         return new JsonResponse([
             'success' => true,
-            'jour' => $utilisateur->getNiveau(),
-            'faim' => $utilisateur->getFaim(),
-            'soif' => $utilisateur->getSoif(),
-            'sante' => $utilisateur->getSante()
+            'jour' => $existingUser->getNiveau(),
+            'faim' => $existingUser->getFaim(),
+            'soif' => $existingUser->getSoif(),
+            'sante' => $existingUser->getSante()
         ]);
     }
-
-
     
 }
