@@ -5,16 +5,58 @@
 {% block body %}
     <nav id="menuJeu">
         <ul>
-            <li id="book" class="bangers-regular nav-item"><img src="{{ asset('img/book.png')}}"/></li>
-            <li id="inventaire" class="bangers-regular nav-item"><img src="{{ asset('img/backpack.png')}}"/></li>
-            <li id="profil" class="bangers-regular nav-item"><img src="{{ asset('img/person.png')}}"/></li>
+            <li id="profil" class="bangers-regular nav-item"><img src="{{ asset('img/person.png') }}"/></li>
+            <li id="book" class="bangers-regular nav-item"><img src="{{ asset('img/book.png') }}"/></li>
         </ul>
     </nav>
 
     <div class="glitch-wrapper" id="game-title">
         <span class="glitch bangers-regular" data-glitch="Profil">Profil</span>
     </div>
-    <div class="container container-bg">
-        <button id="btn-deconnexion" class="btn btn-danger">Déconnexion</button>
+
+    <div class="container container-home">
+        <div class="row" style="margin: 50px;">
+            <div class="col-4">   
+                <div class="card" style="width: 10rem; align-items: center;">
+                    <img src="{{ asset('img/utilisateur.png') }}" alt="avatar" id="avatar" class="card-img-top">
+                    <h2 style="color:black;">{{ utilisateur.pseudo }}</h2>
+                </div>
+            </div>
+            <div class="col-6">   
+                <h2>Jour {{ utilisateur.niveau }}</h2>
+                <p>Satiété : {{ utilisateur.faim }}</p>
+                <p>Soif : {{ utilisateur.soif }}</p>
+                <p>Santé : {{ utilisateur.sante }}</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-4">
+                <div class="card" style="width: 16rem; align-items: center; color:black; padding: 10px;">
+                    <img src="{{ asset('img/pomme.png') }}" alt="pomme" id="pomme" class="card-img-top" style="width: 4rem;">
+                    <h5>Chercher de la nourriture</h5>
+                    <p>+20 satiété</p>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="card" style="width: 16rem; align-items: center; color:black; padding: 10px;">
+                    <img src="{{ asset('img/eau.png') }}" alt="eau" id="eau" class="card-img-top" style="width: 4rem;">
+                    <h5>Chercher de l'eau</h5>
+                    <p>+20 soif</p>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="card" style="width: 16rem; align-items: center; color:black; padding: 10px;">
+                    <img src="{{ asset('img/sante.png') }}" alt="repos" id="repos" class="card-img-top" style="width: 4rem;">
+                    <h5>Se reposer</h5>
+                    <p>+20 santé</p>
+                </div>
+            </div>
+        </div>
+        <p class="row justify-content-center"  style="margin-top: 30px;">Vous pouvez effectuer une action par jour.</p>
+
+        <div class="row justify-content-center" style="margin-top: 60px;">
+            <button id="btn-deconnexion" class="btn btn-danger">Déconnexion</button>
+        </div>
     </div>
 {% endblock %}
