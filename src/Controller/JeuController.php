@@ -41,6 +41,7 @@ final class JeuController extends AbstractController
                 $informations[] = [
                     'titre' => $information->getTitre(),
                     'description' => $information->getDescription(),
+                    'decouverte' => $utilisateurInfo->isDecouverte(),
                 ];
             }
             // Affichage du tableau de bord du jeu
@@ -74,23 +75,44 @@ final class JeuController extends AbstractController
         $informationUtilisateur = $em->getRepository(UtilisateurInformation::class)->findBy(['utilisateur' => $utilisateur]);
 
         // Compter le nombre d'éléments dans la collection
-        $nombreInformations = count($informationUtilisateur);
+        foreach ($informationUtilisateur as $i => $info) {
+            if ($informationUtilisateur[$i]->isDecouverte()) {
+                $nombreInformations = $i + 1;
+                break;
+            }
+        }
     
         // Logique pour les actions
         if ($data['type'] == 'manger') {
-            $existingUser->setFaim($existingUser->getFaim() + 20);
+            $existingUser->setFaim($existingUser->getFaim() + 80);
         } elseif ($data['type'] == 'boire') {
-            $existingUser->setSoif($existingUser->getSoif() + 20);
+            $existingUser->setSoif($existingUser->getSoif() + 80);
         } elseif ($data['type'] == 'reposer') {
-            $existingUser->setSante($existingUser->getSante() + 20);
-        } elseif ($data['type'] == 'rechercher'){
-            $existingUser->addUtilisateurInformation($em->getRepository(Information::class)->findOneBy(['id' => $nombreInformations]));
+            $existingUser->setSante($existingUser->getSante() + 80);
+        } elseif ($data['type'] == 'rechercher') {
+            // Récupérer l'ID actuel et l'incrémenter de 1
+            
+            // Chercher l'information avec l'ID incrémenté
+            $information = $em->getRepository(Information::class)->findOneBy(['id' => $existingUser->getLastIndice() + 1]);
+        
+            if ($information) {
+                $utilisateurInformation = new UtilisateurInformation();
+                $utilisateurInformation->setUtilisateur($existingUser);
+                $utilisateurInformation->setInformation($information);
+                $utilisateurInformation->setDecouverte(true);
+                $existingUser->setLastIndice($existingUser->getLastIndice() + 1);
+                $existingUser->addUtilisateurInformation($utilisateurInformation);
+                $em->persist($utilisateurInformation);
+            } else {
+                return new JsonResponse(['success' => false, 'message' => 'Information non trouvée.'], 404);
+            }
         }
-        else {
-            return new JsonResponse(['success' => false, 'message' => 'Action non reconnue.'], 400);
-        }
+
     
         $existingUser->setNiveau($existingUser->getNiveau() + 1);
+        $existingUser->setFaim($existingUser->getFaim() - 20);
+        $existingUser->setSoif($existingUser->getSoif() - 20);
+        $existingUser->setSante($existingUser->getSante() - 20);
     
         // Persister les changements
         $em->persist($existingUser);
@@ -106,27 +128,6 @@ final class JeuController extends AbstractController
         ]);
     }
 
-    public function getEvenementJSON() {
-        // Chemin vers le fichier JSON
-        $jsonFile = '';
-
-        // Vérifier que le fichier existe
-        if (!file_exists($jsonFile)) {
-            die("Le fichier JSON n'existe pas.");
-        }
-
-        // Lire le contenu du fichier JSON
-        $jsonContent = file_get_contents($jsonFile);
-
-        // Décoder le JSON en tableau associatif (ajouter true pour avoir un tableau)
-        $data = json_decode($jsonContent, true);
-
-        // Vérifier s'il y a eu une erreur lors du décodage
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            die("Erreur lors du décodage JSON : " . json_last_error_msg());
-        }
-    }
-
     #[Route('/jeu/reset', name: 'jeu_reset', methods: ['POST'])]
     public function resetUtilisateur(SessionInterface $session, EntityManagerInterface $em): JsonResponse
     {
@@ -136,26 +137,32 @@ final class JeuController extends AbstractController
             return new JsonResponse(['success' => false, 'message' => 'Utilisateur non trouvé.'], 404);
         }
 
-        // Vérifier si l'utilisateur existe déjà en base de données
+        // Vérifier si l'utilisateur existe en base de données
         $existingUser = $em->getRepository(Utilisateur::class)->findOneBy(['id' => $utilisateur->getId()]);
         if (!$existingUser) {
             return new JsonResponse(['success' => false, 'message' => 'Utilisateur non trouvé en base de données.'], 404);
         }
 
-        // Réinitialisation des valeurs
+        // Réinitialisation des valeurs de base
         $existingUser->setFaim(50);
         $existingUser->setSoif(50);
         $existingUser->setSante(100);
         $existingUser->setNiveau(1);
+        $existingUser->setLastIndice(1);
 
+        // Récupérer toutes les informations liées à l'utilisateur
         $t = $em->getRepository(UtilisateurInformation::class)->findBy(['utilisateur' => $existingUser]);
 
-        // Parcourir chaque élément de la collection $t pour obtenir les informations associées
+        $decouvertes = [];
         foreach ($t as $utilisateurInfo) {
-            $utilisateurInfo->setDecouverte(false);
+            // On vérifie si l'information associée a bien l'ID 1
+            if ($utilisateurInfo->getInformation()->getId() !== 1) {
+                $utilisateurInfo->setDecouverte(false);
+            }
+            $decouvertes[$utilisateurInfo->getInformation()->getId()] = $utilisateurInfo->isDecouverte();
+        $em->persist($utilisateurInfo);
             $em->persist($utilisateurInfo);
         }
-        
 
         // Sauvegarde des changements
         $em->persist($existingUser);
@@ -167,9 +174,11 @@ final class JeuController extends AbstractController
             'faim' => $existingUser->getFaim(),
             'soif' => $existingUser->getSoif(),
             'sante' => $existingUser->getSante(),
-            'jour' => $existingUser->getNiveau()
+            'jour' => $existingUser->getNiveau(),
+            'decouvertes' => $decouvertes
         ]);
     }
+
 
     
 }

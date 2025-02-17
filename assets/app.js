@@ -22,6 +22,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let btnRunInscription = document.getElementById('btnFormInscription');
     let btnRunDeconnexion = document.getElementById('btn-deconnexion');
 
+    let divReglement = document.getElementById('reglement');
+
     //formulaires
     let formConnexion = document.getElementById('form-connexion');
     let formInscription = document.getElementById('form-inscription');
@@ -31,6 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
     tabForms.push(formInscription);
     tabForms.push(divConnexion);
     tabForms.push(divInscription);
+    tabForms.push(divReglement);
 
     btnDeconnexion?.addEventListener('click', function(){
         event.preventDefault();
@@ -53,6 +56,13 @@ document.addEventListener('DOMContentLoaded', function() {
         hideForms();
         formConnexion.style.display = 'block';
         divConnexion.style.display = 'block';
+    });
+
+    btnReglement?.addEventListener('click', function(){
+        event.preventDefault();
+        console.log(divReglement);
+        hideForms();
+        divReglement.style.display = 'block';
     });
 
     btnAccueil?.addEventListener('click', function(){

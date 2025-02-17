@@ -26,6 +26,21 @@
     box-shadow: inset 0px 0px 25.7px 24px rgba(0, 0, 0, 1);
     pointer-events: none; 
  }
+
+ #reglement {
+   opacity: 1 !important;
+   visibility: visible !important;
+   position: relative !important;
+   z-index: 1000 !important;
+}
+
+#div-final {
+   opacity: 1 !important;
+   visibility: visible !important;
+   position: relative !important;
+   z-index: 10 !important;
+}
+
  
  /* formulaires */
  .form {  

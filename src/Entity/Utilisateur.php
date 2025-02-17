@@ -47,6 +47,9 @@ class Utilisateur
     #[ORM\OneToMany(targetEntity: UtilisateurInformation::class, mappedBy: 'utilisateur', cascade: ['persist'])]
     private Collection $utilisateurInformation;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $lastIndice = null;
+
     public function __construct()
     {
         $this->utilisateurInformation = new ArrayCollection();
@@ -173,6 +176,18 @@ class Utilisateur
                 $utilisateurInformation->setUtilisateur(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLastIndice(): ?int
+    {
+        return $this->lastIndice;
+    }
+
+    public function setLastIndice(?int $lastIndice): static
+    {
+        $this->lastIndice = $lastIndice;
 
         return $this;
     }

@@ -36,24 +36,24 @@ class InscriptionController extends AbstractController
         $utilisateur->setFaim(50);
         $utilisateur->setSoif(50);
         $utilisateur->setSante(100);
+        $utilisateur->setLastIndice(1);
 
         $allInfo = $em->getRepository(Information::class)->findAll();
 
-        foreach ($allInfo as $info) {
+        foreach ($allInfo as $index => $info) {
             $informationUtilisateur = new UtilisateurInformation();
-            $informationUtilisateur->setInformation($startInfo);
-            if ($info->getId() == 1) {
-                $informationUtilisateur->setDecouverte(true);
-            }
-            else {
-                $informationUtilisateur->setDecouverte(false);
-            }
+            $informationUtilisateur->setInformation($info);
+            $informationUtilisateur->setUtilisateur($utilisateur);
+            
+            // Seule la première information est découverte
+            $informationUtilisateur->setDecouverte($index === 0);
+            
+            $utilisateur->addUtilisateurInformation($informationUtilisateur);
+            $em->persist($informationUtilisateur);
         }
+        
 
-        $informationUtilisateur->setUtilisateur($utilisateur);
-        $utilisateur->addUtilisateurInformation($informationUtilisateur);
 
-        $em->persist($informationUtilisateur);
         $em->persist($utilisateur);
         $em->flush();
 

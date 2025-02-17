@@ -41,7 +41,7 @@ class ConnexionController extends AbstractController
         $session->set('utilisateur', $utilisateur);
 
         // Retourner une redirection vers une autre page
-        return $this->redirectToRoute('jeu'); 
+        return $this->redirectToRoute('jeu');
     }
 
     #[Route('/api/deconnexion', name: 'deconnexion', methods: ['GET'])]

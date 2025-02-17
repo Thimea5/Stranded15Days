@@ -15,14 +15,29 @@
     </div>
 
     <div class="container container-home">
-        <h1>Informations récoltées</h1>
-        {% for info in informationUtilisateur %} 
-            <div class="col-4" > 
-                <div class="card" style="width: 16rem; align-items: center; color:black; padding: 20px; margin: 20px;">
-                    <h4>{{ info.titre }}</h4>
-                    <p>{{ info.description }}</p>
-                </div>
-            </div>
-        {% endfor %}
+        <h1>Indices trouvés</h1>
+        <div class="row">
+            {% for info in informationUtilisateur %} 
+                {% if info.decouverte %}
+                    <div class="col-4" > 
+                        <div class="card" style="width: 16rem; align-items: center; color:black; padding: 20px; margin: 20px;">
+                            <h4>{{ info.titre }}</h4>
+                            <p>{{ info.description }}</p>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
     </div>
+        <div id="div-final" class="form bangers-regular " style="display:none;">
+            <form id="form-final" style="display:none;">
+                <h1>Salut ! Tu as le mot de passe ? </h1>
+                <div class="inputs">
+                <input type="mot" class="form-control mb-2" placeholder="Mot secret" id="mot" name="mot" required>
+                </div>
+                <div align="center">
+                    <button type="submit" id="btnFormFinal" class="btn btn-success">Communiquer le mot</button>
+                </div>
+            </form>
+        </div>
 {% endblock %}
