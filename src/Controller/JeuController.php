@@ -69,6 +69,12 @@ final class JeuController extends AbstractController
         if (!$existingUser) {
             return new JsonResponse(['success' => false, 'message' => 'Utilisateur non trouvé en base de données.'], 404);
         }
+
+    
+        $informationUtilisateur = $em->getRepository(UtilisateurInformation::class)->findBy(['utilisateur' => $utilisateur]);
+
+        // Compter le nombre d'éléments dans la collection
+        $nombreInformations = count($informationUtilisateur);
     
         // Logique pour les actions
         if ($data['type'] == 'manger') {
@@ -77,7 +83,10 @@ final class JeuController extends AbstractController
             $existingUser->setSoif($existingUser->getSoif() + 20);
         } elseif ($data['type'] == 'reposer') {
             $existingUser->setSante($existingUser->getSante() + 20);
-        } else {
+        } elseif ($data['type'] == 'rechercher'){
+            $existingUser->addUtilisateurInformation($em->getRepository(Information::class)->findOneBy(['id' => $nombreInformations]));
+        }
+        else {
             return new JsonResponse(['success' => false, 'message' => 'Action non reconnue.'], 400);
         }
     
@@ -92,8 +101,75 @@ final class JeuController extends AbstractController
             'jour' => $existingUser->getNiveau(),
             'faim' => $existingUser->getFaim(),
             'soif' => $existingUser->getSoif(),
-            'sante' => $existingUser->getSante()
+            'sante' => $existingUser->getSante(),
+            'informationsUtilisateur' => $existingUser->getUtilisateurInformation()
         ]);
     }
+
+    public function getEvenementJSON() {
+        // Chemin vers le fichier JSON
+        $jsonFile = '';
+
+        // Vérifier que le fichier existe
+        if (!file_exists($jsonFile)) {
+            die("Le fichier JSON n'existe pas.");
+        }
+
+        // Lire le contenu du fichier JSON
+        $jsonContent = file_get_contents($jsonFile);
+
+        // Décoder le JSON en tableau associatif (ajouter true pour avoir un tableau)
+        $data = json_decode($jsonContent, true);
+
+        // Vérifier s'il y a eu une erreur lors du décodage
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            die("Erreur lors du décodage JSON : " . json_last_error_msg());
+        }
+    }
+
+    #[Route('/jeu/reset', name: 'jeu_reset', methods: ['POST'])]
+    public function resetUtilisateur(SessionInterface $session, EntityManagerInterface $em): JsonResponse
+    {
+        $utilisateur = $session->get('utilisateur');
+
+        if (!$utilisateur) {
+            return new JsonResponse(['success' => false, 'message' => 'Utilisateur non trouvé.'], 404);
+        }
+
+        // Vérifier si l'utilisateur existe déjà en base de données
+        $existingUser = $em->getRepository(Utilisateur::class)->findOneBy(['id' => $utilisateur->getId()]);
+        if (!$existingUser) {
+            return new JsonResponse(['success' => false, 'message' => 'Utilisateur non trouvé en base de données.'], 404);
+        }
+
+        // Réinitialisation des valeurs
+        $existingUser->setFaim(50);
+        $existingUser->setSoif(50);
+        $existingUser->setSante(100);
+        $existingUser->setNiveau(1);
+
+        $t = $em->getRepository(UtilisateurInformation::class)->findBy(['utilisateur' => $existingUser]);
+
+        // Parcourir chaque élément de la collection $t pour obtenir les informations associées
+        foreach ($t as $utilisateurInfo) {
+            $utilisateurInfo->setDecouverte(false);
+            $em->persist($utilisateurInfo);
+        }
+        
+
+        // Sauvegarde des changements
+        $em->persist($existingUser);
+        $em->flush();
+
+        return new JsonResponse([
+            'success' => true,
+            'message' => 'Progression réinitialisée.',
+            'faim' => $existingUser->getFaim(),
+            'soif' => $existingUser->getSoif(),
+            'sante' => $existingUser->getSante(),
+            'jour' => $existingUser->getNiveau()
+        ]);
+    }
+
     
 }

@@ -28,8 +28,6 @@ class InscriptionController extends AbstractController
         //                             Un mystérieux personnage vous a promis de venir vous chercher pour vous sauver dans 15 jours. A condition que tu lui donnes le code.
         //                             Tu dois donc survivre pendant 15 jours en gérant ta faim, ta soif et ta santé et tout faire pour trouver ce "code". Bonne chance !');
         
-
-
         $utilisateur = new Utilisateur();
         $utilisateur->setPseudo($data['pseudo']);
         $utilisateur->setMail($data['email']);
@@ -39,10 +37,18 @@ class InscriptionController extends AbstractController
         $utilisateur->setSoif(50);
         $utilisateur->setSante(100);
 
-        $startInfo = $em->getRepository(Information::class)->findOneBy(['id' => 1]);
-        $informationUtilisateur = new UtilisateurInformation();
-        $informationUtilisateur->setInformation($startInfo);
-        $informationUtilisateur->setDecouverte(true);
+        $allInfo = $em->getRepository(Information::class)->findAll();
+
+        foreach ($allInfo as $info) {
+            $informationUtilisateur = new UtilisateurInformation();
+            $informationUtilisateur->setInformation($startInfo);
+            if ($info->getId() == 1) {
+                $informationUtilisateur->setDecouverte(true);
+            }
+            else {
+                $informationUtilisateur->setDecouverte(false);
+            }
+        }
 
         $informationUtilisateur->setUtilisateur($utilisateur);
         $utilisateur->addUtilisateurInformation($informationUtilisateur);

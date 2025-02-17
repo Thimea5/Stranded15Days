@@ -88,9 +88,14 @@
     margin: 10px;
     background-color: #fff;
     color: black;
-    padding: 10px;
+    padding: 10px;  
     border-radius: 10px;
     display: flex;
+    transition: transform 0.3s ease; /* Transition pour un effet fluide */
+}
+
+.action:hover {
+    transform: scale(1.05); /* Agrandit l'élément de 20% */  
 }
 
  .container-survivants {

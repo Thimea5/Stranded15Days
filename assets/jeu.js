@@ -5,6 +5,30 @@ document.addEventListener("DOMContentLoaded", function () {
     let btnMenuBook = document.getElementById("book");
     let btnMenuProfil = document.getElementById("profil");
     let btnMenuInventaire = document.getElementById("inventaire");
+    let btnReset = document.getElementById('btn-reset');
+
+    btnReset?.addEventListener('click', function(){
+        event.preventDefault();
+        btnReset.classList.add("btn-loading");
+        btnReset.disabled = true; 
+        axios.post('/jeu/reset')
+        .then(response => {
+            btnReset.classList.remove("btn-loading"); 
+            btnReset.disabled = false; 
+
+            const data = response.data;
+            if(document.getElementById("affichage-jour")){
+                document.getElementById("affichage-jour").innerText = `Jour ${data.jour} sur 15`;
+            }
+            document.getElementById("affichage-jour").innerText = `Jour ${data.jour} sur 15`;
+            document.getElementById("affichage-satiete").innerText = `Satiété : ${data.faim}`;
+            document.getElementById("affichage-soif").innerText = `Soif : ${data.soif}`;
+            document.getElementById("affichage-sante").innerText = `Santé : ${data.sante}`;
+        })
+        .catch(error => {
+            console.error("Erreur lors du reset :", error);
+        });
+    });
 
     btnMenuBook?.addEventListener("click", function () {
         console.log("click");

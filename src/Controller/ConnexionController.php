@@ -10,11 +10,13 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use App\Entity\Utilisateur;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 
 class ConnexionController extends AbstractController
 {
     #[Route('/api/connexion', name: 'connexion', methods: ['POST'])]
-    public function connexion(Request $request, EntityManagerInterface $em, SessionInterface $session): RedirectResponse
+    public function connexion(Request $request, EntityManagerInterface $em, SessionInterface $session): Response
     {
         $data = json_decode($request->getContent(), true);
 

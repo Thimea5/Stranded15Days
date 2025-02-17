@@ -23,6 +23,7 @@
                 </div>
                 <div style="margin: 20px; align-items: center;">
                     <button id="btn-deconnexion" class="btn btn-danger">Déconnexion</button>
+                    <button id="btn-reset" class="btn" style="background-color:transparent;">Reset</button>
                 </div>
             </div>
             <div class="col-8" style="background-color: #FFFFFF90; border-radius: 10px; padding: 20px; color: black;">
@@ -35,29 +36,29 @@
 
         <div class="row">
             <div class="col-3">
-                <div data-id="manger" class="card" style="width: 16rem; align-items: center; color:black; padding: 10px;">
+                <div data-id="manger" class="card action" style="width: 16rem; align-items: center; color:black; padding: 10px;">
                     <img src="{{ asset('img/pomme.png') }}" alt="pomme" id="pomme" class="card-img-top" style="width: 4rem;">
                     <h5>Chercher de la nourriture</h5>
                     <p>+20 satiété</p>
                 </div>
             </div>
             <div class="col-3">
-                <div data-id="boire" class="card" style="width: 16rem; align-items: center; color:black; padding: 10px;">
+                <div data-id="boire" class="card action" style="width: 16rem; align-items: center; color:black; padding: 10px;">
                     <img src="{{ asset('img/eau.png') }}" alt="eau" id="eau" class="card-img-top" style="width: 4rem;">
                     <h5>Chercher de l'eau</h5>
                     <p>+20 soif</p>
                 </div>
             </div>
             <div class="col-3">
-                <div data-id="reposer" class="card" style="width: 16rem; align-items: center; color:black; padding: 10px;">
+                <div data-id="reposer" class="card action" style="width: 16rem; align-items: center; color:black; padding: 10px;">
                     <img src="{{ asset('img/sante.png') }}" alt="repos" id="repos" class="card-img-top" style="width: 4rem;">
                     <h5>Se reposer</h5>
                     <p>+20 santé</p>
                 </div>
             </div>
             <div class="col-3">
-                <div data-id="rechercher" class="card" style="width: 16rem; align-items: center; color:black; padding: 10px;">
-                    <img src="{{ asset('img/recherche.png') }}" alt="information" id="repos" class="card-img-top" style="width: 4rem;">
+                <div data-id="rechercher" class="card action" style="width: 16rem; align-items: center; color:black; padding: 10px;">
+                    <img src="{{ asset('img/recherche.png') }}" alt="information" id="recherche" class="card-img-top" style="width: 4rem;">
                     <h5>Chercher des informations</h5>
                     <p>+1 indice</p>
                 </div>
