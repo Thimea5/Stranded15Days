@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Information;
+use App\Entity\UtilisateurInformation;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -20,11 +22,32 @@ class InscriptionController extends AbstractController
             return new JsonResponse(['message' => 'Données manquantes'], JsonResponse::HTTP_BAD_REQUEST);
         }
 
+        // $startInfo = new Information();
+        // $startInfo->setTitre('Début de l\'aventure');
+        // $startInfo->setDescription('Ca fait plusieurs mois que tu es bloqué dans ton bunker. Dehors c\'est l\'apocalypse et tu n\'asplus de ressources.
+        //                             Un mystérieux personnage vous a promis de venir vous chercher pour vous sauver dans 15 jours. A condition que tu lui donnes le code.
+        //                             Tu dois donc survivre pendant 15 jours en gérant ta faim, ta soif et ta santé et tout faire pour trouver ce "code". Bonne chance !');
+        
+
+
         $utilisateur = new Utilisateur();
         $utilisateur->setPseudo($data['pseudo']);
         $utilisateur->setMail($data['email']);
         $utilisateur->setMdp(password_hash($data['password'], PASSWORD_BCRYPT));
+        $utilisateur->setNiveau(1);
+        $utilisateur->setFaim(50);
+        $utilisateur->setSoif(50);
+        $utilisateur->setSante(100);
 
+        $startInfo = $em->getRepository(Information::class)->findOneBy(['id' => 1]);
+        $informationUtilisateur = new UtilisateurInformation();
+        $informationUtilisateur->setInformation($startInfo);
+        $informationUtilisateur->setDecouverte(true);
+
+        $informationUtilisateur->setUtilisateur($utilisateur);
+        $utilisateur->addUtilisateurInformation($informationUtilisateur);
+
+        $em->persist($informationUtilisateur);
         $em->persist($utilisateur);
         $em->flush();
 

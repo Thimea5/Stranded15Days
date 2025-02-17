@@ -16,10 +16,12 @@
 
     <div class="container container-home">
         <h1>Informations récoltées</h1>
-        {% for utilisateur.informations %} 
-            <div class="col-3"> 
-                <h3>{{ information.titre }}</h3>
-                <p>{{ information.description }}</p>
+        {% for info in informationUtilisateur %} 
+            <div class="col-4" > 
+                <div class="card" style="width: 16rem; align-items: center; color:black; padding: 20px; margin: 20px;">
+                    <h4>{{ info.titre }}</h4>
+                    <p>{{ info.description }}</p>
+                </div>
             </div>
         {% endfor %}
     </div>

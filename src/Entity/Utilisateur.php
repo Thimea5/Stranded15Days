@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UtilisateurRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
@@ -38,6 +40,17 @@ class Utilisateur
 
     #[ORM\Column]
     private ?int $soif = 100;
+
+    /**
+     * @var Collection<int, UtilisateurInformation>
+     */
+    #[ORM\OneToMany(targetEntity: UtilisateurInformation::class, mappedBy: 'utilisateur', cascade: ['persist'])]
+    private Collection $utilisateurInformation;
+
+    public function __construct()
+    {
+        $this->utilisateurInformation = new ArrayCollection();
+    }
 
     // Getters et setters
 
@@ -131,6 +144,36 @@ class Utilisateur
     public function setSoif(int $soif): self
     {
         $this->soif = $soif;
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UtilisateurInformation>
+     */
+    public function getUtilisateurInformation(): Collection
+    {
+        return $this->utilisateurInformation;
+    }
+
+    public function addUtilisateurInformation(UtilisateurInformation $utilisateurInformation): static
+    {
+        if (!$this->utilisateurInformation->contains($utilisateurInformation)) {
+            $this->utilisateurInformation->add($utilisateurInformation);
+            $utilisateurInformation->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUtilisateurInformation(UtilisateurInformation $utilisateurInformation): static
+    {
+        if ($this->utilisateurInformation->removeElement($utilisateurInformation)) {
+            // set the owning side to null (unless already changed)
+            if ($utilisateurInformation->getUtilisateur() === $this) {
+                $utilisateurInformation->setUtilisateur(null);
+            }
+        }
+
         return $this;
     }
 }

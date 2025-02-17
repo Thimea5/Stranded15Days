@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Utilisateur;
+use App\Entity\UtilisateurInformation;
 use Doctrine\ORM\EntityManagerInterface;
+use Proxies\__CG__\App\Entity\Information;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,10 +30,24 @@ final class JeuController extends AbstractController
             $session->set('utilisateur', $utilisateur);
         }
 
-        // Affichage du tableau de bord du jeu
-        return $this->render('jeu/index.html.twig', [
-            'utilisateur' => $utilisateur,
-        ]);
+
+            $t = $em->getRepository(UtilisateurInformation::class)->findBy(['utilisateur' => $utilisateur]);
+
+            $informations = [];
+
+            // Parcourir chaque élément de la collection $t pour obtenir les informations associées
+            foreach ($t as $utilisateurInfo) {
+                $information = $utilisateurInfo->getInformation();
+                $informations[] = [
+                    'titre' => $information->getTitre(),
+                    'description' => $information->getDescription(),
+                ];
+            }
+            // Affichage du tableau de bord du jeu
+            return $this->render('jeu/index.html.twig', [
+                'utilisateur' => $utilisateur,
+                'informationUtilisateur' => $informations
+            ]);
     }
 
 
